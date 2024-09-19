@@ -96,7 +96,7 @@ const page = () => {
             Interested in collaborating? Let’s talk!
           </p>
           <a
-            href="mailto:chisom@example.com"
+            href="mailto:chisomhenryg@gmail.com"
             className="bg-white text-green-600 py-3 px-8 rounded-full shadow-lg hover:bg-green-100 transition duration-300"
           >
             Contact Me

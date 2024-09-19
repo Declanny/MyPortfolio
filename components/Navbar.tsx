@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -21,10 +21,18 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle logo click
+  const handleLogoClick = () => {
+    if (window.location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.location.href = '/';
+    }
+  };
+
   // Toggle sidebar
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-    console.log("Sidebar Open: ", sidebarOpen); // Log the state to verify it's toggling
   };
 
   return (
@@ -35,7 +43,12 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
-        <h1 className="text-white text-2xl font-bold">My Portfolio</h1>
+        <h1
+          className="text-white text-2xl font-bold cursor-pointer"
+          onClick={handleLogoClick}
+        >
+          My Portfolio
+        </h1>
 
         {/* Desktop Links */}
         <ul className="hidden md:flex space-x-6">
@@ -50,8 +63,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/projects" className="text-white hover:underline">
-              Projects
+            <Link href="/dashboard" className="text-white hover:underline">
+              Dashboard
             </Link>
           </li>
           <li>
@@ -66,11 +79,10 @@ const Navbar = () => {
           className="md:hidden text-white text-3xl cursor-pointer"
           onClick={toggleSidebar}
         >
-          {/* If sidebar is open, show close icon, otherwise show menu icon */}
           {sidebarOpen ? (
-            <AiOutlineClose style={{ color: 'white', fontSize: '24px' }} /> // Force icon size and color
+            <AiOutlineClose className="w-6 h-6" />
           ) : (
-            <AiOutlineMenu style={{ color: 'white', fontSize: '24px' }} />
+            <AiOutlineMenu className="w-6 h-6" />
           )}
         </div>
       </div>
@@ -79,9 +91,12 @@ const Navbar = () => {
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-gray-800 transition-transform transform ${
           sidebarOpen ? 'translate-x-0' : 'translate-x-full'
-        } md:hidden`}
+        } md:hidden z-40`} // Ensure sidebar has a high z-index
       >
-        <ul className="flex flex-col space-y-6 mt-24 px-6">
+        <div className="flex justify-end p-4">
+          <AiOutlineClose className="w-6 h-6 text-white cursor-pointer" onClick={toggleSidebar} />
+        </div>
+        <ul className="flex flex-col space-y-6 mt-8 px-6">
           <li>
             <Link href="/" className="text-white hover:underline" onClick={toggleSidebar}>
               Home
@@ -93,8 +108,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/projects" className="text-white hover:underline" onClick={toggleSidebar}>
-              Projects
+            <Link href="/dashboard" className="text-white hover:underline" onClick={toggleSidebar}>
+              Dashboard
             </Link>
           </li>
           <li>
