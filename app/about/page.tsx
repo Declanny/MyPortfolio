@@ -32,10 +32,10 @@ const About = () => {
           {/* Right Section: Image */}
           <div className="md:w-1/2 mb-8 md:mb-0">
             <Image
-              src="/about-developer.jpg"
+              src="https://res.cloudinary.com/dqbbm0guw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1727183081/portfolio_z2ldxh.jpg"
               alt="About Developer"
-              width={500}
-              height={500}
+              width={450}
+              height={450}
               className="rounded-full object-cover shadow-lg"
             />
           </div>

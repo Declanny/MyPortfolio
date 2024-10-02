@@ -18,10 +18,37 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  
 }
+
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: #1a1a1a; /* Dark background */
+  color: #f0f0f0; /* Light text color */
+}
+/* globals.css or nprogress-custom.css */
+
+/* Customize the color of the loading bar */
+#nprogress .bar {
+  background: #00ff00 !important; /* Change to your preferred color */
+}
+
+/* Customize the color of the spinner, if enabled */
+#nprogress .spinner-icon {
+  border-top-color: #00ff00 !important; /* Change spinner color */
+  border-left-color: #00ff00 !important;
+}
+
+/* Customize the background of the progress bar */
+#nprogress .peg {
+  box-shadow: 0 0 10px #00ff00, 0 0 5px #00ff00 !important; /* Change glow effect */
 }

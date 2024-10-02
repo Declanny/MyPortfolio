@@ -1,5 +1,10 @@
-import React from 'react';
-import Image from 'next/image';
+"use client";
+import { TextGenerateEffect } from "../components/ui/text-generate-effect"; // Import text effect
+import React from "react";
+import Image from "next/image";
+import Link from "next/link"; // Import Link from Next.js
+
+const words = `Hi, I'm Chisom — Full-Stack Developer & Designer`;
 
 const page = () => {
   return (
@@ -12,9 +17,11 @@ const page = () => {
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
               Welcome to My Portfolio
             </h1>
-            <p className="text-lg font-light mb-8">
-              Hi, I'm Chisom — Full-Stack Developer & Designer
-            </p>
+            {/* Replace static text with TextGenerateEffect */}
+            <div className="mt-4 mb-6 px-2 py-2">
+              <TextGenerateEffect words={words} />
+            </div>
+
             <a
               href="#projects"
               className="bg-white text-blue-600 py-3 px-6 rounded-full shadow-lg hover:bg-blue-100 transition-all duration-300"
@@ -26,7 +33,7 @@ const page = () => {
           {/* Right Section: Image */}
           <div className="md:w-1/2 mb-8 md:mb-0">
             <Image
-              src="/developer.jpg"
+              src="https://res.cloudinary.com/dqbbm0guw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1727183081/portfolio_z2ldxh.jpg"
               alt="Developer Picture"
               width={500}
               height={500}
@@ -43,7 +50,16 @@ const page = () => {
             My Skills
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {["JavaScript", "React", "Next.js", "Tailwind CSS", "Node.js", "TypeScript", "Redux", "Git"].map((skill, index) => (
+            {[
+              "JavaScript",
+              "React",
+              "Next.js",
+              "Tailwind CSS",
+              "Node.js",
+              "TypeScript",
+              "Redux",
+              "Git",
+            ].map((skill, index) => (
               <div
                 key={index}
                 className="bg-gradient-to-r from-gray-100 to-gray-200 p-6 rounded-lg shadow-md text-lg font-medium text-gray-700"
@@ -63,25 +79,46 @@ const page = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {[
-              { src: '/project1.jpg', title: 'Project 1' },
-              { src: '/project2.jpg', title: 'Project 2' },
-              { src: '/project3.jpg', title: 'Project 3' },
+              { 
+                src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1727859444/portFirst_qebhlf.jpg", 
+                title: "RealEstate Project", 
+                link: "https://homeacq.vercel.app/"
+              },
+              { 
+                src: "/project2.jpg", 
+                title: "Project 2" 
+              },
+              { 
+                src: "/project3.jpg", 
+                title: "Project 3" 
+              },
             ].map((project, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-lg shadow-lg transition-all hover:shadow-xl"
+                className="bg-white p-5 rounded-lg shadow-lg transition-all hover:shadow-xl"
               >
-                <Image
-                  src={project.src}
-                  alt={project.title}
-                  width={600}
-                  height={350}
-                  className="rounded-lg mb-6 object-cover"
-                />
-                <h3 className="text-2xl font-bold">{project.title}</h3>
+                <Link href={project.link || "#"} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={project.src}
+                    alt={project.title}
+                    width={600}
+                    height={350}
+                    className="rounded-lg mb-6 object-cover"
+                  />
+                  <h3 className="text-2xl font-bold">{project.title}</h3>
+                </Link>
                 <p className="mt-3 text-gray-600">
-                  A brief description of the project.
+                  {project.title === "RealEstate Project" ? "This is RealEstate Project" : "Project description here."}
                 </p>
+                
+                {/* View Site Button */}
+                {project.link && (
+                  <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                    <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300">
+                      View Site
+                    </button>
+                  </Link>
+                )}
               </div>
             ))}
           </div>

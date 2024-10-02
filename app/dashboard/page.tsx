@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { ApexOptions } from 'apexcharts'; // Import ApexOptions
 
 // Dynamic import for the chart library
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -44,12 +45,12 @@ const ProjectPage = () => {
   }, []);
 
   // Example chart options with better styling and animations
-  const chartOptions = {
+  const chartOptions: ApexOptions = {
     chart: {
       id: 'analytics-chart',
       animations: {
         enabled: true,
-        easing: 'easeinout',
+        easing: 'easeinout', // This value should be valid according to ApexOptions
         dynamicAnimation: {
           speed: 1200,
         },
