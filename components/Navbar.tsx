@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'; // Import menu and close icons
+import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlineDashboard, AiOutlinePhone } from 'react-icons/ai'; // Import necessary icons
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -42,6 +42,18 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
+        {/* Mobile Menu Icon (on the left) */}
+        <div
+          className="md:hidden text-white text-3xl cursor-pointer mr-4"
+          onClick={toggleSidebar}
+        >
+          {sidebarOpen ? (
+            <AiOutlineClose className="w-6 h-6" />
+          ) : (
+            <AiOutlineMenu className="w-6 h-6" />
+          )}
+        </div>
+
         {/* Logo */}
         <h1
           className="text-white text-2xl font-bold cursor-pointer"
@@ -74,45 +86,52 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Mobile Menu Icon */}
-        <div
-          className="md:hidden text-white text-3xl cursor-pointer"
-          onClick={toggleSidebar}
-        >
-          {sidebarOpen ? (
-            <AiOutlineClose className="w-6 h-6" />
-          ) : (
-            <AiOutlineMenu className="w-6 h-6" />
-          )}
+        {/* Placeholder for another feature on the right */}
+        <div className="md:hidden text-white text-3xl">
+          {/* This is where you can add the new feature on the right */}
         </div>
       </div>
 
       {/* Sidebar (for mobile view) */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-gray-800 transition-transform transform ${
-          sidebarOpen ? 'translate-x-0' : 'translate-x-full'
-        } md:hidden z-40`} // Ensure sidebar has a high z-index
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-800 transition-transform transform ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:hidden z-40`}
       >
-        <div className="flex justify-end p-4">
-          <AiOutlineClose className="w-6 h-6 text-white cursor-pointer" onClick={toggleSidebar} />
+        {/* Sidebar Navbar */}
+        <div className="flex justify-between items-center bg-gray-700 py-4 px-4">
+          {/* My Portfolio Text */}
+          <h2 className="text-white text-xl font-bold">My Portfolio</h2>
+
+          {/* Close Icon */}
+          <AiOutlineClose
+            className="w-6 h-6 text-white cursor-pointer"
+            onClick={toggleSidebar}
+          />
         </div>
+
+        {/* Sidebar Links with Icons */}
         <ul className="flex flex-col space-y-6 mt-8 px-6">
-          <li>
+          <li className="flex items-center space-x-2">
+            <AiOutlineHome className="text-white" />
             <Link href="/" className="text-white hover:underline" onClick={toggleSidebar}>
               Home
             </Link>
           </li>
-          <li>
+          <li className="flex items-center space-x-2">
+            <AiOutlineUser className="text-white" />
             <Link href="/about" className="text-white hover:underline" onClick={toggleSidebar}>
               About
             </Link>
           </li>
-          <li>
+          <li className="flex items-center space-x-2">
+            <AiOutlineDashboard className="text-white" />
             <Link href="/dashboard" className="text-white hover:underline" onClick={toggleSidebar}>
               Dashboard
             </Link>
           </li>
-          <li>
+          <li className="flex items-center space-x-2">
+            <AiOutlinePhone className="text-white" />
             <Link href="/contact" className="text-white hover:underline" onClick={toggleSidebar}>
               Contact
             </Link>
