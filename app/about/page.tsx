@@ -22,7 +22,7 @@ const About = () => {
               About Me
             </h1>
             <p className="text-lg font-light mb-8">
-              Hi, I'm Chisom, a Full-Stack Developer specializing in modern technologies like React, Next.js, and Tailwind CSS. I have a passion for creating seamless user experiences and high-quality applications.
+              Hi, I&#39;m Chisom, a Full-Stack Developer specializing in modern technologies like React, Next.js, and Tailwind CSS. I have a passion for creating seamless user experiences and high-quality applications.
             </p>
             <p className="text-lg font-light mb-8">
               With several years of experience in development, I aim to deliver scalable and efficient solutions for various projects.
