@@ -128,12 +128,14 @@ const ProjectPage = () => {
           link: "https://homeacq.vercel.app/"
         },
         { 
-          src: "/project2.jpg", 
-          title: "Project 2" 
+          src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1727951559/IMG_0516_k21rxe.jpg", 
+          title: "RealEstate Project", 
+          link: "https://homeacq.vercel.app/"
         },
         { 
-          src: "/project3.jpg", 
-          title: "Project 3" 
+          src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1727951559/IMG_0516_k21rxe.jpg", 
+          title: "RealEstate Project", 
+          link: "https://homeacq.vercel.app/"
         },
       ].map((project, index) => (
         <div
