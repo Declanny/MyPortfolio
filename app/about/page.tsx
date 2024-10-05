@@ -1,7 +1,8 @@
 'use client';
-
 import React, { useState } from 'react';
 import Image from 'next/image'; // Importing next/image for optimized images
+import { IconCloudDemo } from '@/components/ui/iconCloudDemo';
+import Meteors from "@/components/magicui/meteors";
 
 const About = () => {
   const [cvRequested, setCvRequested] = useState(false);
@@ -42,6 +43,10 @@ const About = () => {
         </div>
       </section>
 
+      <div className="flex justify-center">
+        <IconCloudDemo />
+      </div>
+
       {/* Achievements Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4 text-center">
@@ -52,9 +57,16 @@ const About = () => {
               { title: 'Projects Completed', value: '30+' },
               { title: 'Technologies Mastered', value: '10+' },
             ].map((achievement, index) => (
-              <div key={index} className="bg-gray-100 p-8 rounded-lg shadow-lg text-gray-800">
-                <h3 className="text-3xl font-bold mb-4">{achievement.value}</h3>
-                <p className="text-lg font-light">{achievement.title}</p>
+              <div
+                key={index}
+                className="relative bg-gray-100 p-8 rounded-lg shadow-lg text-gray-800 flex flex-col justify-center items-center overflow-hidden"
+              >
+                {/* Add the Meteors component inside the card */}
+                <Meteors number={30} />
+                
+                {/* Card content */}
+                <h3 className="text-3xl font-bold mb-4 relative z-10">{achievement.value}</h3>
+                <p className="text-lg font-light relative z-10">{achievement.title}</p>
               </div>
             ))}
           </div>
@@ -109,3 +121,4 @@ const About = () => {
 };
 
 export default About;
+``

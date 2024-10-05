@@ -13,7 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       animation: {
-        fadeIn: 'fadeIn 0.5s ease-in',
+        meteor: "meteor 5s linear infinite",
       },
       keyframes: {
         fadeIn: {
