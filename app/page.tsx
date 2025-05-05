@@ -5,10 +5,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from '@/components/Navbar'; // Import the Navbar component
 
+// Define interface for TextAnimation props
+interface TextAnimationProps {
+  words: string;
+}
+
 // Custom text animation component with modern look
-const TextAnimation = ({ words }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
+  const [displayedText, setDisplayedText] = useState<string>('');
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     if (currentIndex < words.length) {
@@ -30,9 +35,60 @@ const TextAnimation = ({ words }) => {
   );
 };
 
+// Define interfaces for structured data
+interface Skill {
+  name: string;
+  logo: string;
+}
+
+interface Project {
+  src: string;
+  title: string;
+  desc: string;
+  link: string;
+  tags: string[];
+}
+
 // Main Page Component
-const Page = () => {
+const Page: React.FC = () => {
   const words = "Hi, I'm Chisom — Full-Stack Developer & Business Strategy Consultant";
+  
+  // Define skills array with proper typing
+  const skills: Skill[] = [
+    { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+    { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+    { name: "Tailwind", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
+    { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+    { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+    { name: "Redux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" },
+    { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  ];
+
+  // Define projects array with proper typing
+  const projects: Project[] = [
+    { 
+      src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746448959/Screenshot_2025-05-05_at_1.42.23_PM_mrncnp.png", 
+      title: "Global Logistic Platform", 
+      desc: "Envoy Angel is an innovative logistics company that leverages technology to transform the shipping industry. Our platform connects businesses with reliable carriers while providing real-time tracking and analytics.",
+      link: "https:envoyangel.com",
+      tags: ["React", "API", "Tailwind", "Charts"]
+    },
+    { 
+      src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746450397/Screenshot_2025-05-05_at_2.06.05_PM_pzmevo.png", 
+      title: "Real Estate Investment Management", 
+      desc: "Qaba is Real Estate Investment Management Software that helps you manage your real estate investments and track your portfolio performance.",
+      link: "https://qaba.vercel.app/",
+      tags: ["JavaScript", "Charts", "API", "Tailwind", "Google Maps"]
+    },
+    { 
+      src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746451219/Screenshot_2025-05-05_at_2.19.47_PM_tj2xcg.png", 
+      title: "Lyfecircle Group",
+      desc: "LyfeCircle Group is a transnational and technology, digital and experiential driven conglomerate, with vibrant member companies and ...",
+      link: "https://lyfecirclegroup.com/",
+      tags: ["Next.js", "Tailwind", "3D", "Node.js", "MongoDb"]
+    },
+  ];
   
   return (
     <>
@@ -119,16 +175,7 @@ const Page = () => {
             </motion.h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-                { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-                { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-                { name: "Tailwind", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
-                { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-                { name: "Redux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" },
-                { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-              ].map((skill, index) => (
+              {skills.map((skill, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -168,29 +215,7 @@ const Page = () => {
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {[
-                  { 
-                    src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746448959/Screenshot_2025-05-05_at_1.42.23_PM_mrncnp.png", 
-                    title: "Global Logistic Platform", 
-                    desc: "Envoy Angel is an innovative logistics company that leverages technology to transform the shipping industry. Our platform connects businesses with reliable carriers while providing real-time tracking and analytics.",
-                    link: "https:envoyangel.com",
-                    tags: ["React", "API", "Tailwind", "Charts"]
-                  },
-                  { 
-                    src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746450397/Screenshot_2025-05-05_at_2.06.05_PM_pzmevo.png", 
-                    title: "Real Estate Investment Management", 
-                    desc: "Qaba is Real Estate Investment Management Software that helps you manage your real estate investments and track your portfolio performance.",
-                    link: "https://qaba.vercel.app/",
-                    tags: ["JavaScript", "Charts", "API", "Tailwind", "Google Maps"]
-                  },
-                { 
-                  src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746451219/Screenshot_2025-05-05_at_2.19.47_PM_tj2xcg.png", 
-                  title: "Lyfecircle Group",
-                  desc: "LyfeCircle Group is a transnational and technology, digital and experiential driven conglomerate, with vibrant member companies and ...",
-                  link: "https://lyfecirclegroup.com/",
-                  tags: ["Next.js", "Tailwind", "3D", "Node.js", "MongoDb"]
-                },
-              ].map((project, index) => (
+              {projects.map((project, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -258,12 +283,12 @@ const Page = () => {
             >
               <h2 className="text-4xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                  Let's Create Something Amazing
+                  Let&apos;s Create Something Amazing
                 </span>
               </h2>
               
               <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
-                Ready to bring your ideas to life? I'm currently available for freelance projects 
+                Ready to bring your ideas to life? I&apos;m currently available for freelance projects 
                 and exciting collaborations.
               </p>
               

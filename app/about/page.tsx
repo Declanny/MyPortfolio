@@ -4,10 +4,15 @@ import Image from 'next/image';
 import { motion } from "framer-motion";
 import Navbar from '@/components/Navbar';
 
+// Define interface for TextAnimation props
+interface TextAnimationProps {
+  words: string;
+}
+
 // Custom text animation component (matching homepage style)
-const TextAnimation = ({ words }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
+  const [displayedText, setDisplayedText] = useState<string>('');
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     if (currentIndex < words.length) {
@@ -29,11 +34,24 @@ const TextAnimation = ({ words }) => {
   );
 };
 
-const About = () => {
-  const [cvRequested, setCvRequested] = useState(false);
+// Interface for achievement items
+interface Achievement {
+  title: string;
+  value: string;
+}
+
+const About: React.FC = () => {
+  const [cvRequested, setCvRequested] = useState<boolean>(false);
   const words = "Full-Stack Developer & Business Strategy Consultant";
 
-  const handleRequestCV = () => {
+  // Define achievements array with proper typing
+  const achievements: Achievement[] = [
+    { title: 'Years of Experience', value: '2+' },
+    { title: 'Projects Completed', value: '8+' },
+    { title: 'Technologies Mastered', value: '10+' },
+  ];
+
+  const handleRequestCV = (): void => {
     setCvRequested(true);
     alert('Request sent! You will receive permission soon.');
   };
@@ -66,7 +84,7 @@ const About = () => {
               </div>
 
               <p className="text-lg font-light mb-8 text-gray-300">
-                Hi, I'm Chisom, a passionate creator of digital experiences specializing in modern technologies like React, Next.js, and Tailwind CSS. With several years of experience in development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
+                Hi, I&apos;m Chisom, a passionate creator of digital experiences specializing in modern technologies like React, Next.js, and Tailwind CSS. With several years of experience in development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
               </p>
             </motion.div>
 
@@ -107,11 +125,7 @@ const About = () => {
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {[
-                { title: 'Years of Experience', value: '2+' },
-                { title: 'Projects Completed', value: '8+' },
-                { title: 'Technologies Mastered', value: '10+' },
-              ].map((achievement, index) => (
+              {achievements.map((achievement, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -121,8 +135,6 @@ const About = () => {
                   whileHover={{ y: -5, scale: 1.03 }}
                   className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg relative overflow-hidden flex flex-col items-center justify-center min-h-52"
                 >
-                 
-                  
                   <h3 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent relative z-10">
                     {achievement.value}
                   </h3>
@@ -201,12 +213,12 @@ const About = () => {
             >
               <h2 className="text-4xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                  Let's Connect
+                  Let&apos;s Connect
                 </span>
               </h2>
               
               <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
-                Ready to bring your ideas to life? I'm currently available for freelance projects 
+                Ready to bring your ideas to life? I&apos;m currently available for freelance projects 
                 and exciting collaborations.
               </p>
               

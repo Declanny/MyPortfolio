@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import {
@@ -11,17 +11,24 @@ import {
   AiFillInstagram
 } from 'react-icons/ai';
 
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
-  const [notification, setNotification] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -29,7 +36,7 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
@@ -68,12 +75,12 @@ const ContactPage = () => {
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                Let's Connect
+                Let&apos;s Connect
               </span>
             </h1>
             
             <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
-              Have a project in mind or want to collaborate? I'm always open to new opportunities 
+              Have a project in mind or want to collaborate? I&apos;m always open to new opportunities 
               and exciting challenges in the world of web development.
             </p>
           </motion.div>
@@ -246,7 +253,7 @@ const ContactPage = () => {
               </h2>
               
               <div className="grid grid-cols-5 gap-4">
-              <motion.a 
+                <motion.a 
                   whileHover={{ y: -5, scale: 1.1 }}
                   href="https://linkedin.com" 
                   target="_blank" 
