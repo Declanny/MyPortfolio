@@ -4,7 +4,6 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import {
-  AiFillSlackCircle,
   AiFillFacebook,
   AiFillTwitterCircle,
   AiFillLinkedin,
@@ -26,6 +25,7 @@ const ContactPage = () => {
     message: ''
   });
   const [notification, setNotification] = useState<string>('');
+  const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,26 +36,48 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setNotification('Message sent successfully! I will get back to you shortly.');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+    try {
+      // Send data to API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setNotification('Message sent successfully! I will get back to you shortly.');
+        setNotificationType('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setNotification(`Failed to send message: ${data.error || 'Unknown error'}`);
+        setNotificationType('error');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setNotification('Failed to send message. Please try again later.');
+      setNotificationType('error');
+    } finally {
       setIsSubmitting(false);
       
       // Clear notification after 5 seconds
       setTimeout(() => {
         setNotification('');
       }, 5000);
-    }, 1500);
+    }
   };
 
   return (
@@ -179,7 +201,11 @@ const ContactPage = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400"
+                  className={`mt-6 p-4 ${
+                    notificationType === 'success' 
+                      ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
+                      : 'bg-red-500/20 border border-red-500/30 text-red-400'
+                  } rounded-lg`}
                 >
                   {notification}
                 </motion.div>
@@ -203,45 +229,37 @@ const ContactPage = () => {
               </h2>
               
               <div className="space-y-5">
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-gradient-to-r from-blue-500 to-teal-500 p-3 text-white mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Email</h3>
-                    <a href="mailto:chisom@example.com" className="text-gray-300 hover:text-blue-400 transition-colors">
-                      chisom@example.com
-                    </a>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-gradient-to-r from-blue-500 to-teal-500 p-3 text-white mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Phone</h3>
-                    <p className="text-gray-300">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-gradient-to-r from-blue-500 to-teal-500 p-3 text-white mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Location</h3>
-                    <p className="text-gray-300">San Francisco, CA</p>
-                  </div>
-                </div>
-              </div>
+  {/* Email */}
+  <div className="flex items-start gap-4">
+    <div className="rounded-full bg-gradient-to-r from-blue-500 to-teal-500 p-3 text-white mt-1">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    </div>
+    <div>
+      <h3 className="text-xl font-semibold text-white">Email</h3>
+      <a href="mailto:chisomhenryg@gmail.com" className="text-gray-300 hover:text-blue-400 transition-colors">
+        chisomhenryg@gmail.com
+      </a>
+    </div>
+  </div>
+
+  {/* Phone */}
+  <div className="flex items-start gap-4">
+    <div className="rounded-full bg-gradient-to-r from-blue-500 to-teal-500 p-3 text-white mt-1">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      </svg>
+    </div>
+    <div>
+      <h3 className="text-xl font-semibold text-white">Phone</h3>
+      <a href="tel:+2347083089127" className="text-gray-300 hover:text-blue-400 transition-colors">
+        +234 (708) 308-9127
+      </a>
+    </div>
+  </div>
+</div>
+
             </div>
             
             {/* Social Media Section */}
@@ -252,10 +270,10 @@ const ContactPage = () => {
                 </span>
               </h2>
               
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <motion.a 
                   whileHover={{ y: -5, scale: 1.1 }}
-                  href="https://linkedin.com" 
+                  href="https://www.linkedin.com/in/chisomhenryg/" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="flex items-center justify-center"
@@ -264,17 +282,7 @@ const ContactPage = () => {
                 </motion.a>
                 <motion.a 
                   whileHover={{ y: -5, scale: 1.1 }}
-                  href="https://slack.com" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="flex items-center justify-center"
-                >
-                  <AiFillSlackCircle className="w-12 h-12 text-purple-400 hover:text-purple-300 transition-colors" />
-                </motion.a>
-                
-                <motion.a 
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  href="https://facebook.com" 
+                  href="https://www.facebook.com/share/18gsNgGGSy/?mibextid=wwXIfr" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="flex items-center justify-center"
@@ -284,7 +292,7 @@ const ContactPage = () => {
                 
                 <motion.a 
                   whileHover={{ y: -5, scale: 1.1 }}
-                  href="https://twitter.com" 
+                  href="https://x.com/11declan_?s=21&t=UOzvhZvwZuAe5hZuC1YiyQ" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="flex items-center justify-center"
@@ -294,7 +302,7 @@ const ContactPage = () => {
                 
                 <motion.a 
                   whileHover={{ y: -5, scale: 1.1 }}
-                  href="https://instagram.com" 
+                  href="https://www.instagram.com/11declan?igsh=bHN3dGxrMW5oYmE0&utm_source=qr" 
                   target="_blank" 
                   rel="noreferrer" 
                   className="flex items-center justify-center"
@@ -331,7 +339,7 @@ const ContactPage = () => {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="mailto:chisom@example.com"
+              href="mailto:chisomhenryg@gmail.com"
               className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 py-3 px-8 rounded-full text-lg font-medium shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
             >
               Discuss Your Project

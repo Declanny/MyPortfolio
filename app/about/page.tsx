@@ -41,7 +41,6 @@ interface Achievement {
 }
 
 const About: React.FC = () => {
-  const [cvRequested, setCvRequested] = useState<boolean>(false);
   const words = "Full-Stack Developer & Business Strategy Consultant";
 
   // Define achievements array with proper typing
@@ -50,11 +49,6 @@ const About: React.FC = () => {
     { title: 'Projects Completed', value: '8+' },
     { title: 'Technologies Mastered', value: '10+' },
   ];
-
-  const handleRequestCV = (): void => {
-    setCvRequested(true);
-    alert('Request sent! You will receive permission soon.');
-  };
 
   return (
     <>
@@ -147,7 +141,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* CV Section - Updated with glass morphism */}
+        {/* CV Section - Updated with direct link */}
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-teal-900/30"></div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
@@ -168,11 +162,11 @@ const About: React.FC = () => {
               
               <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
                 Interested in learning more about my experience and qualifications?
-                Request access to view my comprehensive CV.
+                View my comprehensive CV to see my full professional background.
               </p>
             </motion.div>
 
-            {/* CV Request Permission Card */}
+            {/* CV View Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -181,23 +175,22 @@ const About: React.FC = () => {
               className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg max-w-md mx-auto"
             >
               <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                Request Permission
+                Professional Resume
               </h3>
               <p className="mb-6 text-gray-300">
-                To view my CV, you will need to request permission. Once approved, I will send you a link to download the CV.
+                Check out my detailed CV to learn more about my professional experience, skills, and qualifications.
               </p>
 
-              <motion.button
+              <motion.a
+                href="https://docs.google.com/document/d/your-cv-document-id"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleRequestCV}
-                className={`${
-                  cvRequested ? 'bg-gray-600' : 'bg-gradient-to-r from-blue-500 to-teal-500'
-                } text-white py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium`}
-                disabled={cvRequested}
+                className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium"
               >
-                {cvRequested ? 'Request Sent' : 'Request CV Access'}
-              </motion.button>
+                View CV
+              </motion.a>
             </motion.div>
           </div>
         </section>

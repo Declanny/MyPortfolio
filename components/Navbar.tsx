@@ -2,13 +2,55 @@
 
 import { useState, useEffect } from 'react';
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlinePhone} from 'react-icons/ai';
 
-// Navbar Component with glass morphism
+// Decorative SVG Component
+const DecorativeSVG = () => {
+  return (
+    <motion.svg 
+      className="absolute right-0 top-full w-32 h-32 text-white opacity-50"
+      viewBox="0 0 100 100"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.5 }}
+      transition={{ duration: 1.5 }}
+    >
+      {/* Abstract lines resembling a creative/artistic drawing */}
+      <path 
+        d="M10,50 Q30,20 50,50 T90,50" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1" 
+        strokeDasharray="1,3"
+        className="animate-pulse"
+      />
+      <path 
+        d="M20,30 C40,10 60,90 80,30" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1" 
+      />
+      <path 
+        d="M30,10 Q50,90 70,10" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1" 
+        strokeLinecap="round"
+      />
+      <circle cx="50" cy="50" r="5" fill="none" stroke="currentColor" />
+      <circle cx="70" cy="30" r="2" fill="currentColor" />
+      <circle cx="30" cy="30" r="2" fill="currentColor" />
+    </motion.svg>
+  );
+};
+
+// Navbar Component with glass morphism and active link indicator
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +73,12 @@ const Navbar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
   return (
     <nav
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
@@ -39,7 +87,7 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="container mx-auto flex justify-between items-center py-4 px-6 relative">
         {/* Mobile Menu Icon (on the left) */}
         <div
           className="md:hidden text-white text-3xl cursor-pointer"
@@ -61,19 +109,31 @@ const Navbar = () => {
           </span>
         </motion.h1>
 
-        {/* Desktop Links */}
+        {/* Desktop Links with Active Indicator */}
         <ul className="hidden md:flex space-x-8">
-          {['Home', 'About', 'Contact'].map((item, index) => (
+          {navItems.map((item, index) => (
             <motion.li 
               key={index}
               whileHover={{ y: -3 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="relative"
             >
               <Link 
-                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} 
-                className="text-white hover:bg-gradient-to-r from-blue-400 to-teal-400 hover:bg-clip-text hover:text-transparent transition-all duration-300"
+                href={item.path} 
+                className={`text-white hover:bg-gradient-to-r from-blue-400 to-teal-400 hover:bg-clip-text hover:text-transparent transition-all duration-300 pb-1 ${
+                  pathname === item.path ? 'font-medium' : ''
+                }`}
               >
-                {item}
+                {item.name}
+                {pathname === item.path && (
+                  <motion.div 
+                    className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-teal-400 rounded-sm"
+                    layoutId="navIndicator"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
               </Link>
             </motion.li>
           ))}
@@ -81,6 +141,9 @@ const Navbar = () => {
 
         {/* Placeholder for another feature on the right */}
         <div className="md:hidden"></div>
+        
+        {/* Decorative SVG only on home page */}
+        {isHomePage && <DecorativeSVG />}
       </div>
 
       {/* Modern sidebar with blur effect */}
@@ -103,25 +166,33 @@ const Navbar = () => {
         </div>
 
         <ul className="flex flex-col space-y-6 mt-8 px-6">
-          <li className="flex items-center space-x-3 group">
-            <AiOutlineHome className="text-blue-400 group-hover:text-teal-400 transition-colors" />
-            <Link href="/" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
-              Home
-            </Link>
-          </li>
-          <li className="flex items-center space-x-3 group">
-            <AiOutlineUser className="text-blue-400 group-hover:text-teal-400 transition-colors" />
-            <Link href="/about" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
-              About
-            </Link>
-          </li>
-          
-          <li className="flex items-center space-x-3 group">
-            <AiOutlinePhone className="text-blue-400 group-hover:text-teal-400 transition-colors" />
-            <Link href="/contact" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
-              Contact
-            </Link>
-          </li>
+          {navItems.map((item, index) => (
+            <li key={index} className="flex items-center space-x-3 group relative">
+              {index === 0 && <AiOutlineHome className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
+              {index === 1 && <AiOutlineUser className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
+              {index === 2 && <AiOutlinePhone className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
+              
+              <Link 
+                href={item.path} 
+                className={`text-white group-hover:text-teal-400 transition-colors ${
+                  pathname === item.path ? 'font-medium' : ''
+                }`} 
+                onClick={toggleSidebar}
+              >
+                {item.name}
+              </Link>
+              
+              {pathname === item.path && (
+                <motion.div 
+                  className="absolute -left-6 w-1 h-6 bg-gradient-to-b from-blue-400 to-teal-400 rounded-r-sm"
+                  layoutId="sidebarIndicator"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </li>
+          ))}
         </ul>
       </motion.div>
     </nav>

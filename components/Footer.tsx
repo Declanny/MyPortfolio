@@ -1,6 +1,6 @@
 'use client';
 
-import { FaTwitter, FaInstagram, FaGithub, FaSlack, FaLinkedin } from 'react-icons/fa';
+import { FaTwitter, FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -9,8 +9,8 @@ const Footer = () => {
       <div className="flex justify-center space-x-6">
         {/* Twitter Icon */}
         <a
-          href="https://twitter.com/yourhandle"
-          target="_blank"
+                  href="https://x.com/11declan_?s=21&t=UOzvhZvwZuAe5hZuC1YiyQ" 
+                  target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-400 transition-colors duration-300"
           aria-label="Twitter"
@@ -20,8 +20,8 @@ const Footer = () => {
         
         {/* Instagram Icon */}
         <a
-          href="https://instagram.com/yourhandle"
-          target="_blank"
+                  href="https://www.instagram.com/11declan?igsh=bHN3dGxrMW5oYmE0&utm_source=qr" 
+                  target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-400 transition-colors duration-300"
           aria-label="Instagram"
@@ -31,7 +31,7 @@ const Footer = () => {
         
         {/* GitHub Icon */}
         <a
-          href="https://github.com/yourhandle"
+          href="https://github.com/Declanny"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-400 transition-colors duration-300"
@@ -40,21 +40,11 @@ const Footer = () => {
           <FaGithub size={24} />
         </a>
         
-        {/* Slack Icon */}
-        <a
-          href="https://slack.com/yourhandle"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white hover:text-gray-400 transition-colors duration-300"
-          aria-label="Slack"
-        >
-          <FaSlack size={24} />
-        </a>
         
         {/* LinkedIn Icon */}
         <a
-          href="https://linkedin.com/in/yourhandle"
-          target="_blank"
+                  href="https://www.linkedin.com/in/chisomhenryg/" 
+                  target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-400 transition-colors duration-300"
           aria-label="LinkedIn"
