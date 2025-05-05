@@ -1,27 +1,24 @@
 "use client";
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlineDashboard, AiOutlinePhone } from 'react-icons/ai'; // Import necessary icons
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlinePhone} from 'react-icons/ai';
 
+// Navbar Component with glass morphism
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle logo click
   const handleLogoClick = () => {
     if (window.location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,114 +27,103 @@ const Navbar = () => {
     }
   };
 
-  // Toggle sidebar
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   return (
     <nav
-      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-gradient-to-r from-blue-500 to-green-500 shadow-lg' : 'bg-transparent'
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? 'backdrop-blur-md bg-white/10 dark:bg-gray-900/80 shadow-lg' 
+          : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Mobile Menu Icon (on the left) */}
         <div
-          className="md:hidden text-white text-3xl cursor-pointer mr-4"
+          className="md:hidden text-white text-3xl cursor-pointer"
           onClick={toggleSidebar}
         >
-          {sidebarOpen ? (
-            <AiOutlineClose className="w-6 h-6" />
-          ) : (
-            <AiOutlineMenu className="w-6 h-6" />
-          )}
+          {sidebarOpen ? <AiOutlineClose className="w-6 h-6" /> : <AiOutlineMenu className="w-6 h-6" />}
         </div>
 
         {/* Logo */}
-        <h1
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
           className="text-white text-2xl font-bold cursor-pointer"
           onClick={handleLogoClick}
         >
-          My Portfolio
-        </h1>
+          <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+            Chisom.dev
+          </span>
+        </motion.h1>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex space-x-6">
-          <li>
-            <Link href="/" className="text-white hover:underline">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="text-white hover:underline">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/dashboard" className="text-white hover:underline">
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="text-white hover:underline">
-              Contact
-            </Link>
-          </li>
+        <ul className="hidden md:flex space-x-8">
+          {['Home', 'About', 'Contact'].map((item, index) => (
+            <motion.li 
+              key={index}
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Link 
+                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} 
+                className="text-white hover:bg-gradient-to-r from-blue-400 to-teal-400 hover:bg-clip-text hover:text-transparent transition-all duration-300"
+              >
+                {item}
+              </Link>
+            </motion.li>
+          ))}
         </ul>
 
         {/* Placeholder for another feature on the right */}
-        <div className="md:hidden text-white text-3xl">
-          {/* This is where you can add the new feature on the right */}
-        </div>
+        <div className="md:hidden"></div>
       </div>
 
-      {/* Sidebar (for mobile view) */}
-      <div
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-800 transition-transform transform ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden z-40`}
+      {/* Modern sidebar with blur effect */}
+      <motion.div
+        initial={{ x: "-100%" }}
+        animate={{ x: sidebarOpen ? 0 : "-100%" }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed top-0 left-0 h-full w-64 backdrop-blur-xl bg-gray-900/90 md:hidden z-40 border-r border-gray-700/30"
       >
-        {/* Sidebar Navbar */}
-        <div className="flex justify-between items-center bg-gray-700 py-4 px-4">
-          {/* My Portfolio Text */}
-          <h2 className="text-white text-xl font-bold">My Portfolio</h2>
-
-          {/* Close Icon */}
+        <div className="flex justify-between items-center bg-gray-800/50 py-4 px-4">
+          <h2 className="text-white text-xl font-bold">
+            <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+              Menu
+            </span>
+          </h2>
           <AiOutlineClose
             className="w-6 h-6 text-white cursor-pointer"
             onClick={toggleSidebar}
           />
         </div>
 
-        {/* Sidebar Links with Icons */}
         <ul className="flex flex-col space-y-6 mt-8 px-6">
-          <li className="flex items-center space-x-2">
-            <AiOutlineHome className="text-white" />
-            <Link href="/" className="text-white hover:underline" onClick={toggleSidebar}>
+          <li className="flex items-center space-x-3 group">
+            <AiOutlineHome className="text-blue-400 group-hover:text-teal-400 transition-colors" />
+            <Link href="/" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
               Home
             </Link>
           </li>
-          <li className="flex items-center space-x-2">
-            <AiOutlineUser className="text-white" />
-            <Link href="/about" className="text-white hover:underline" onClick={toggleSidebar}>
+          <li className="flex items-center space-x-3 group">
+            <AiOutlineUser className="text-blue-400 group-hover:text-teal-400 transition-colors" />
+            <Link href="/about" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
               About
             </Link>
           </li>
-          <li className="flex items-center space-x-2">
-            <AiOutlineDashboard className="text-white" />
-            <Link href="/dashboard" className="text-white hover:underline" onClick={toggleSidebar}>
-              Dashboard
-            </Link>
-          </li>
-          <li className="flex items-center space-x-2">
-            <AiOutlinePhone className="text-white" />
-            <Link href="/contact" className="text-white hover:underline" onClick={toggleSidebar}>
+          
+          <li className="flex items-center space-x-3 group">
+            <AiOutlinePhone className="text-blue-400 group-hover:text-teal-400 transition-colors" />
+            <Link href="/contact" className="text-white group-hover:text-teal-400 transition-colors" onClick={toggleSidebar}>
               Contact
             </Link>
           </li>
         </ul>
-      </div>
+      </motion.div>
     </nav>
   );
 };

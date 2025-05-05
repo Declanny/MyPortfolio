@@ -1,11 +1,37 @@
 'use client';
-import React, { useState } from 'react';
-import Image from 'next/image'; // Importing next/image for optimized images
-import { IconCloudDemo } from '@/components/ui/iconCloudDemo';
-import Meteors from "@/components/magicui/meteors";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { motion } from "framer-motion";
+import Navbar from '@/components/Navbar';
+
+// Custom text animation component (matching homepage style)
+const TextAnimation = ({ words }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < words.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText(prev => prev + words[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, words]);
+
+  return (
+    <h2 className="text-xl md:text-2xl font-medium">
+      <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+        {displayedText}
+      </span>
+      <span className="animate-pulse">|</span>
+    </h2>
+  );
+};
 
 const About = () => {
   const [cvRequested, setCvRequested] = useState(false);
+  const words = "Full-Stack Developer & Business Strategy Consultant";
 
   const handleRequestCV = () => {
     setCvRequested(true);
@@ -13,112 +39,191 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* About Section */}
-      <section className="bg-gradient-to-r from-blue-500 to-green-500 text-white py-24">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
-          {/* Left Section: Text */}
-          <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
-              About Me
-            </h1>
-            <p className="text-lg font-light mb-8">
-              Hi, I&#39;m Chisom, a Full-Stack Developer specializing in modern technologies like React, Next.js, and Tailwind CSS. I have a passion for creating seamless user experiences and high-quality applications.
-            </p>
-            <p className="text-lg font-light mb-8">
-              With several years of experience in development, I aim to deliver scalable and efficient solutions for various projects.
-            </p>
-          </div>
-
-          {/* Right Section: Image */}
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <Image
-              src="https://res.cloudinary.com/dqbbm0guw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1727183081/portfolio_z2ldxh.jpg"
-              alt="About Developer"
-              width={450}
-              height={450}
-              className="rounded-full object-cover shadow-lg"
-            />
-          </div>
-        </div>
-      </section>
-
-      <div className="flex justify-center">
-        <IconCloudDemo />
-      </div>
-
-      {/* Achievements Section */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-semibold mb-12 text-gray-800">Achievements & Skills</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[
-              { title: 'Years of Experience', value: '5+' },
-              { title: 'Projects Completed', value: '30+' },
-              { title: 'Technologies Mastered', value: '10+' },
-            ].map((achievement, index) => (
-              <div
-                key={index}
-                className="relative bg-gray-100 p-8 rounded-lg shadow-lg text-gray-800 flex flex-col justify-center items-center overflow-hidden"
-              >
-                {/* Add the Meteors component inside the card */}
-                <Meteors number={30} />
-                
-                {/* Card content */}
-                <h3 className="text-3xl font-bold mb-4 relative z-10">{achievement.value}</h3>
-                <p className="text-lg font-light relative z-10">{achievement.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CV Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-semibold mb-8 text-gray-800">View My CV</h2>
-          <p className="text-lg font-light mb-8 text-gray-600">
-            Interested in learning more about my experience and qualifications? You can request access to view my CV.
-          </p>
-
-          {/* CV Request Permission Section */}
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Request Permission</h3>
-            <p className="mb-6 text-gray-600">
-              To view my CV, you will need to request permission. Once approved, I will send you a link to download the CV.
-            </p>
-
-            <button
-              onClick={handleRequestCV}
-              className={`${
-                cvRequested ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-              } text-white py-3 px-6 rounded-full transition-all duration-300`}
-              disabled={cvRequested}
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
+        {/* Hero Section with glass morphism */}
+        <section className="pt-28 pb-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/mesh-gradient.png')] opacity-20 mix-blend-lighten"></div>
+          <div className="absolute top-20 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl opacity-10"></div>
+          
+          <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center relative z-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="md:w-1/2 text-center md:text-left"
             >
-              {cvRequested ? 'Request Sent' : 'Request CV Access'}
-            </button>
-          </div>
-        </div>
-      </section>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                  About Me
+                </span>
+              </h1>
+              
+              <div className="mt-4 mb-8">
+                <TextAnimation words={words} />
+              </div>
 
-      {/* Contact Section */}
-      <section className="py-24 bg-gradient-to-r from-green-500 to-teal-500 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold mb-8">Get In Touch</h2>
-          <p className="text-lg mb-8 font-light">
-            Interested in collaborating or learning more? Let’s chat!
-          </p>
-          <a
-            href="mailto:chisom@example.com"
-            className="bg-white text-green-600 py-3 px-8 rounded-full shadow-lg hover:bg-green-100 transition duration-300"
-          >
-            Contact Me
-          </a>
-        </div>
-      </section>
-    </div>
+              <p className="text-lg font-light mb-8 text-gray-300">
+                Hi, I'm Chisom, a passionate creator of digital experiences specializing in modern technologies like React, Next.js, and Tailwind CSS. With several years of experience in development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="md:w-1/2 mb-8 md:mb-0"
+            >
+              <div className="relative w-80 h-80 mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full blur-2xl opacity-30"></div>
+             
+                <Image
+                  src="https://res.cloudinary.com/dqbbm0guw/image/upload/v1746447146/Screenshot_2025-05-05_at_1.11.37_PM_gc0bhd.png"
+                  alt="About Developer"
+                  width={400}
+                  height={400}
+                  className="rounded-full object-cover shadow-2xl border-4 border-white/10 backdrop-blur-sm relative z-10 w-full h-full"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Achievements Section - Updated with glass cards */}
+        <section className="py-20 relative">
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-4xl font-bold mb-14"
+            >
+              <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                Achievements & Skills
+              </span>
+            </motion.h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {[
+                { title: 'Years of Experience', value: '2+' },
+                { title: 'Projects Completed', value: '8+' },
+                { title: 'Technologies Mastered', value: '10+' },
+              ].map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, scale: 1.03 }}
+                  className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg relative overflow-hidden flex flex-col items-center justify-center min-h-52"
+                >
+                 
+                  
+                  <h3 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent relative z-10">
+                    {achievement.value}
+                  </h3>
+                  <p className="text-lg text-gray-300 relative z-10">
+                    {achievement.title}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CV Section - Updated with glass morphism */}
+        <section className="py-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-teal-900/30"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl opacity-10"></div>
+          
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                  View My CV
+                </span>
+              </h2>
+              
+              <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
+                Interested in learning more about my experience and qualifications?
+                Request access to view my comprehensive CV.
+              </p>
+            </motion.div>
+
+            {/* CV Request Permission Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg max-w-md mx-auto"
+            >
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                Request Permission
+              </h3>
+              <p className="mb-6 text-gray-300">
+                To view my CV, you will need to request permission. Once approved, I will send you a link to download the CV.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleRequestCV}
+                className={`${
+                  cvRequested ? 'bg-gray-600' : 'bg-gradient-to-r from-blue-500 to-teal-500'
+                } text-white py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium`}
+                disabled={cvRequested}
+              >
+                {cvRequested ? 'Request Sent' : 'Request CV Access'}
+              </motion.button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Contact Section - Matching homepage style */}
+        <section className="py-24 relative">
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                  Let's Connect
+                </span>
+              </h2>
+              
+              <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
+                Ready to bring your ideas to life? I'm currently available for freelance projects 
+                and exciting collaborations.
+              </p>
+              
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="mailto:chisom@example.com"
+                className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 py-4 px-10 rounded-full text-lg font-medium shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+              >
+                Get In Touch
+              </motion.a>
+            </motion.div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 
 export default About;
-``
