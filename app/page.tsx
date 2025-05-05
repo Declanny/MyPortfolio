@@ -89,7 +89,7 @@ const Page: React.FC = () => {
       src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746448959/Screenshot_2025-05-05_at_1.42.23_PM_mrncnp.png", 
       title: "Global Logistic Platform", 
       desc: "Envoy Angel is an innovative logistics company that leverages technology to transform the shipping industry. Our platform connects businesses with reliable carriers while providing real-time tracking and analytics.",
-      link: "https:envoyangel.com",
+      link: "https://envoyangel.com",
       tags: ["React", "API", "Tailwind", "Charts"]
     },
     { 
