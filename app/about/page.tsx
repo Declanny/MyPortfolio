@@ -35,20 +35,20 @@ const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
 };
 
 // Interface for achievement items
-interface Achievement {
-  title: string;
-  value: string;
-}
+// interface Achievement {
+//   title: string;
+//   value: string;
+// }
 
 const About: React.FC = () => {
   const words = "Full-Stack Developer & Business Strategy Consultant";
 
   // Define achievements array with proper typing
-  const achievements: Achievement[] = [
-    { title: 'Years of Experience', value: '2+' },
-    { title: 'Projects Completed', value: '8+' },
-    { title: 'Technologies Mastered', value: '10+' },
-  ];
+  // const achievements: Achievement[] = [
+  //   { title: 'Years of Experience', value: '2+' },
+  //   { title: 'Projects Completed', value: '8+' },
+  //   { title: 'Technologies Mastered', value: '10+' },
+  // ];
 
   return (
     <>
@@ -104,7 +104,7 @@ const About: React.FC = () => {
         </section>
 
         {/* Achievements Section - Updated with glass cards */}
-        <section className="py-20 relative">
+        {/* <section className="py-20 relative">
           <div className="container mx-auto px-4 text-center relative z-10">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -139,7 +139,7 @@ const About: React.FC = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CV Section - Updated with direct link */}
         <section className="py-24 relative">
@@ -175,21 +175,21 @@ const About: React.FC = () => {
               className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg max-w-md mx-auto"
             >
               <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                Professional Resume
+                My Resume
               </h3>
               <p className="mb-6 text-gray-300">
                 Check out my detailed CV to learn more about my professional experience, skills, and qualifications.
               </p>
 
               <motion.a
-                href="https://docs.google.com/document/d/your-cv-document-id"
+                href="https://drive.google.com/file/d/1O77SXJy-oxMW9jT-C3p1i6azTKN1eN0F/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium"
               >
-                View CV
+                View 
               </motion.a>
             </motion.div>
           </div>

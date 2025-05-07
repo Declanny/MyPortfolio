@@ -17,30 +17,8 @@ const DecorativeSVG = () => {
       transition={{ duration: 1.5 }}
     >
       {/* Abstract lines resembling a creative/artistic drawing */}
-      <path 
-        d="M10,50 Q30,20 50,50 T90,50" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1" 
-        strokeDasharray="1,3"
-        className="animate-pulse"
-      />
-      <path 
-        d="M20,30 C40,10 60,90 80,30" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1" 
-      />
-      <path 
-        d="M30,10 Q50,90 70,10" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1" 
-        strokeLinecap="round"
-      />
-      <circle cx="50" cy="50" r="5" fill="none" stroke="currentColor" />
-      <circle cx="70" cy="30" r="2" fill="currentColor" />
-      <circle cx="30" cy="30" r="2" fill="currentColor" />
+  
+ 
     </motion.svg>
   );
 };
