@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // The env object is for exposing server environment variables to the client
-  // Server-side environment variables from .env.local are automatically available
-  // without needing to be listed here
   env: {
-    // Only include environment variables here that you want to expose to the browser
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASS: process.env.EMAIL_PASS,
+    EMAIL_RECIPIENT: process.env.EMAIL_RECIPIENT,
   },
   images: {
     remotePatterns: [
@@ -19,4 +18,5 @@ const nextConfig = {
   },
 };
 
+// Export the config using ES modules syntax
 export default nextConfig;
