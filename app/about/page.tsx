@@ -182,7 +182,7 @@ const About: React.FC = () => {
               </p>
 
               <motion.a
-                href="https://drive.google.com/file/d/1Sdn6BuNe0HvPtUrVzcP3hkRo37WPuAwt/view?usp=sharing"
+                href="https://drive.google.com/file/d/1Qo1arbwWG1347dJkv5JVV8sM4Ya87wRz/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
