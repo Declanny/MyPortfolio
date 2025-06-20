@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -35,8 +35,6 @@ const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
   );
 };
 
-
-
 interface Project {
   src: string;
   title: string;
@@ -48,6 +46,9 @@ interface Project {
 // Main Page Component
 const Page: React.FC = () => {
   const words = "Hi, I'm Chisom — Full-Stack Developer & Business Strategy Consultant";
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   
   // Floating animation variants
   const floatingAnimation = {
@@ -106,7 +107,54 @@ const Page: React.FC = () => {
       link: "https://lyfecirclegroup.com/",
       tags: ["Next.js", "Tailwind", "3D", "Node.js", "MongoDb"]
     },
+    {
+      src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1750434080/Screenshot_2025-06-20_at_4.41.08_PM_pq2u2r.png",
+      title: "Freed AI Medical Scribe",
+      desc: "Freed Inc. offers an AI-powered medical scribe tool for healthcare providers. Freed's AI listens to doctor–patient conversations and generates structured clinical notes (SOAP format) for review. Over 20,000 clinicians use it to save 2+ hours per day. HIPAA-compliant, SOC 2 & HITECH certified.",
+      link: "https://freed.com/",
+      tags: ["AI", "Healthcare", "Next.js", "Security"]
+    },
   ];
+
+  // Scroll functions
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 350; // Approximate card width + gap
+      scrollContainerRef.current.scrollBy({
+        left: -cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 350; // Approximate card width + gap
+      scrollContainerRef.current.scrollBy({
+        left: cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Check scroll position to update button states
+  const checkScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScrollPosition);
+      checkScrollPosition(); // Initial check
+      
+      return () => scrollContainer.removeEventListener('scroll', checkScrollPosition);
+    }
+  }, []);
   
   return (
     <>
@@ -261,71 +309,127 @@ const Page: React.FC = () => {
           </div>
         </section>
 
-        {/* Projects Section with showcase style */}
+        {/* Projects Section with improved horizontal scrolling */}
         <section id="projects" className="py-20 relative">
-          <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl font-bold mb-14"
+              className="text-4xl font-bold mb-14 text-center"
             >
               <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
                 Featured Projects
               </span>
             </motion.h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-xl group"
+            <div className="relative">
+              {/* Navigation Buttons */}
+              <div className="hidden lg:flex justify-center mb-8 gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={scrollLeft}
+                  disabled={!canScrollLeft}
+                  className={`p-3 rounded-full backdrop-blur-sm border transition-all duration-300 ${
+                    canScrollLeft 
+                      ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' 
+                      : 'bg-gray-800/50 border-gray-700 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
-                  <div className="relative overflow-hidden">
-                    <Image
-                      src={project.src}
-                      alt={project.title}
-                      width={600}
-                      height={350}
-                      className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="text-gray-300 mb-4">
-                      {project.desc}
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag, idx) => (
-                        <span key={idx} className="text-xs py-1 px-2 bg-white/10 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </motion.button>
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={scrollRight}
+                  disabled={!canScrollRight}
+                  className={`p-3 rounded-full backdrop-blur-sm border transition-all duration-300 ${
+                    canScrollRight 
+                      ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' 
+                      : 'bg-gray-800/50 border-gray-700 text-gray-500 cursor-not-allowed'
+                  }`}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+              </div>
 
-                    <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                      <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-2 px-4 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition duration-300"
-                      >
-                        View Project
-                      </motion.button>
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
+              {/* Projects Container */}
+              <div className="relative overflow-hidden">
+                <div 
+                  ref={scrollContainerRef}
+                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                  style={{ 
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none'
+                  }}
+                >
+                  {projects.map((project, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex-none w-80 lg:w-96 backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-xl group hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300"
+                    >
+                      <div className="relative overflow-hidden">
+                        <Image
+                          src={project.src}
+                          alt={project.title}
+                          width={600}
+                          height={350}
+                          className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl lg:text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                          {project.title}
+                        </h3>
+                        
+                        <p className="text-gray-300 mb-4 text-sm lg:text-base leading-relaxed">
+                          {project.desc}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag, idx) => (
+                            <span key={idx} className="text-xs py-1 px-2 bg-white/10 rounded-full border border-white/20">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                          <motion.button 
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-4 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium"
+                          >
+                            View Project →
+                          </motion.button>
+                        </Link>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Gradient overlays for scroll indication on mobile */}
+                <div className="lg:hidden absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none z-10"></div>
+                <div className="lg:hidden absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none z-10"></div>
+              </div>
+
+              {/* Mobile scroll indicator */}
+              <div className="lg:hidden text-center mt-6">
+                <p className="text-sm text-gray-400">← Swipe to explore more projects →</p>
+              </div>
             </div>
           </div>
         </section>
@@ -370,7 +474,7 @@ const Page: React.FC = () => {
                   href="https://github.com/Declanny"
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className=" bg-gray-800 border border-white/20 py-4 px-10 rounded-full text-lg font-medium shadow-lg hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
+                  className="bg-gray-800 border border-white/20 py-4 px-10 rounded-full text-lg font-medium shadow-lg hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
                 >
                   <svg 
                     className="w-6 h-6 mr-2" 
