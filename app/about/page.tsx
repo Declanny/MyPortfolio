@@ -97,6 +97,7 @@ const About: React.FC = () => {
                   width={400}
                   height={400}
                   className="rounded-full object-cover shadow-2xl border-4 border-white/10 backdrop-blur-sm relative z-10 w-full h-full"
+                  priority
                 />
               </div>
             </motion.div>

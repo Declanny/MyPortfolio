@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ interface TextAnimationProps {
 }
 
 // Custom text animation component with modern look
-const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
+const TextAnimation: React.FC<TextAnimationProps> = React.memo(({ words }) => {
   const [displayedText, setDisplayedText] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -33,7 +33,8 @@ const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
       <span className="animate-pulse">|</span>
     </h2>
   );
-};
+});
+TextAnimation.displayName = "TextAnimation";
 
 interface Project {
   src: string;
@@ -138,13 +139,13 @@ const Page: React.FC = () => {
   };
 
   // Check scroll position to update button states
-  const checkScrollPosition = () => {
+  const checkScrollPosition = useCallback(() => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
@@ -154,7 +155,7 @@ const Page: React.FC = () => {
       
       return () => scrollContainer.removeEventListener('scroll', checkScrollPosition);
     }
-  }, []);
+  }, [checkScrollPosition]);
   
   return (
     <>
@@ -302,6 +303,7 @@ const Page: React.FC = () => {
                     width={400}
                     height={400}
                     className="rounded-3xl object-cover shadow-2xl border-4 border-white/10 backdrop-blur-sm relative z-10"
+                    priority
                   />
                 </motion.div>
               </div>
@@ -386,6 +388,7 @@ const Page: React.FC = () => {
                           width={600}
                           height={350}
                           className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
