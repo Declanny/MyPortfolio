@@ -108,7 +108,7 @@ const Page: React.FC = () => {
       title: "Naija CP – Digital Wallet & Gaming Credit Platform (Nigeria)", 
       desc: "Naija CP is a fast-growing Nigerian digital platform that allows users to buy and manage virtual products such as game credits (e.g., Call of Duty CP, PUBG UC), airtime, cable TV subscriptions, and electricity bills — all in one place. The platform combines convenience, speed, and affordability for gamers, resellers, and everyday users across Nigeria.",
       link: "https://www.naijacp.com/",
-      tags: ["JavaScript", "Charts", "API", "Tailwind", "Google Maps"]
+      tags: ["JavaScript", "React", "Tailwind",]
     },
     { 
       src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746450397/Screenshot_2025-05-05_at_2.06.05_PM_pzmevo.png", 
@@ -178,19 +178,19 @@ const Page: React.FC = () => {
       <Navbar /> {/* Use the imported Navbar component */}
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
         {/* Hero Section with glass morphism */}
-        <section className="pt-28 pb-20 relative overflow-hidden">
+        <section className="pt-40 md:pt-44 pb-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/mesh-gradient.png')] opacity-20 mix-blend-lighten"></div>
           <div className="absolute top-20 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl opacity-10"></div>
           
-          <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center relative z-10">
+          <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between relative z-10 max-w-6xl">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="md:w-1/2 text-center md:text-left"
+              className="w-full md:w-1/2 lg:pr-8 text-center md:text-left"
             >
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
                   Building Digital <br />Experiences
                 </span>
@@ -205,7 +205,7 @@ const Page: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   href="#projects"
-                  className="bg-gradient-to-r from-blue-500 to-teal-500 py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 text-white font-medium"
+                  className="bg-gradient-to-r from-blue-500 to-teal-500 py-3 px-6 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 text-white font-medium"
                 >
                   View My Work
                 </motion.a>
@@ -214,7 +214,7 @@ const Page: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   href="/contact"
-                  className="bg-transparent border border-white/20 backdrop-blur-sm py-3 px-8 rounded-full shadow-lg hover:bg-white/10 transition-all duration-300"
+                  className="bg-transparent border border-white/20 backdrop-blur-sm py-3 px-6 rounded-full shadow-lg hover:bg-white/10 transition-all duration-300"
                 >
                   Get In Touch
                 </motion.a>
@@ -225,10 +225,10 @@ const Page: React.FC = () => {
                   href="https://github.com/Declanny"
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="bg-gray-800 border border-white/20 py-3 px-8 rounded-full shadow-lg hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
+                  className="bg-gray-800 border border-white/20 py-3 px-6 rounded-full shadow-lg hover:bg-gray-700 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <svg 
-                    className="w-5 h-5 mr-2" 
+                    className="w-5 h-5" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 24 24" 
                     fill="currentColor"
@@ -245,9 +245,9 @@ const Page: React.FC = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="md:w-1/2 mb-8 md:mb-0"
+              className="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center md:justify-end"
             >
-              <div className="relative">
+              <div className="relative w-[300px] md:w-[350px] lg:w-[400px]">
                 {/* Background glow */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full blur-2xl opacity-30"></div>
                 
@@ -314,7 +314,7 @@ const Page: React.FC = () => {
                   </svg>
 
                   <Image
-                    src="https://res.cloudinary.com/dqbbm0guw/image/upload/v1746447146/Screenshot_2025-05-05_at_1.11.37_PM_gc0bhd.png"
+                    src="https://res.cloudinary.com/dqbbm0guw/image/upload/v1752491965/thief_jhqpgg.png"
                     alt="Developer Picture"
                     width={400}
                     height={400}
