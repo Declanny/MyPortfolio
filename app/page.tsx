@@ -50,7 +50,16 @@ const Page: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<{ [key: string]: boolean }>({});
   
+  // Function to toggle description expansion
+  const toggleDescription = (index: number) => {
+    setExpandedDescriptions(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   // Floating animation variants
   const floatingAnimation = {
     animate: {
@@ -93,6 +102,13 @@ const Page: React.FC = () => {
       desc: "Envoy Angel is an innovative logistics company that leverages technology to transform the shipping industry. Our platform connects businesses with reliable carriers while providing real-time tracking and analytics.",
       link: "https://www.envoyangel.com/",
       tags: ["React", "API", "Tailwind", "Charts"]
+    },
+    { 
+      src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1752490355/Screenshot_2025-07-14_at_11.08.33_AM_jx3jj6.png", 
+      title: "Naija CP – Digital Wallet & Gaming Credit Platform (Nigeria)", 
+      desc: "Naija CP is a fast-growing Nigerian digital platform that allows users to buy and manage virtual products such as game credits (e.g., Call of Duty CP, PUBG UC), airtime, cable TV subscriptions, and electricity bills — all in one place. The platform combines convenience, speed, and affordability for gamers, resellers, and everyday users across Nigeria.",
+      link: "https://www.naijacp.com/",
+      tags: ["JavaScript", "Charts", "API", "Tailwind", "Google Maps"]
     },
     { 
       src: "https://res.cloudinary.com/dqbbm0guw/image/upload/v1746450397/Screenshot_2025-05-05_at_2.06.05_PM_pzmevo.png", 
@@ -381,49 +397,99 @@ const Page: React.FC = () => {
                       viewport={{ once: true }}
                       className="flex-none w-80 lg:w-96 backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-xl group hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300"
                     >
-                      <div className="relative overflow-hidden">
-                        <Image
-                          src={project.src}
-                          alt={project.title}
-                          width={600}
-                          height={350}
-                          className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </div>
-                      
-                      <div className="p-6">
-                        <h3 className="text-xl lg:text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                          {project.title}
-                        </h3>
-                        
-                        <p className="text-gray-300 mb-4 text-sm lg:text-base leading-relaxed">
-                          {project.desc}
-                        </p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.tags.map((tag, idx) => (
-                            <span key={idx} className="text-xs py-1 px-2 bg-white/10 rounded-full border border-white/20">
-                              {tag}
-                            </span>
-                          ))}
+                      {/* Card Content Container */}
+                      <div className="flex flex-col h-full">
+                        {/* Image Section */}
+                        <div className="relative h-48 overflow-hidden">
+                          <Image
+                            src={project.src}
+                            alt={project.title}
+                            width={600}
+                            height={350}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
+                        
+                        {/* Content Section */}
+                        <div className="flex flex-col flex-grow p-6">
+                          {/* Title */}
+                          <h3 className="text-xl lg:text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent line-clamp-2">
+                            {project.title}
+                          </h3>
+                          
+                          {/* Description Section - Fixed Height */}
+                          <div className="mb-4">
+                            <div className="relative">
+                              <p className={`text-gray-300 text-sm lg:text-base leading-relaxed ${!expandedDescriptions[index] ? 'line-clamp-3' : ''}`}>
+                                {project.desc}
+                              </p>
+                              {project.desc.length > 100 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    toggleDescription(index);
+                                  }}
+                                  className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-200 mt-1 inline-flex items-center gap-1"
+                                >
+                                  {expandedDescriptions[index] ? (
+                                    <>
+                                      Show Less
+                                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                      </svg>
+                                    </>
+                                  ) : (
+                                    <>
+                                      Read More
+                                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                      </svg>
+                                    </>
+                                  )}
+                                </button>
+                              )}
+                            </div>
+                          </div>
 
-                        <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                          <motion.button 
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-4 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium flex items-center justify-center gap-2"
-                          >
-                            {/* Website icon */}
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-                              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20" stroke="currentColor" strokeWidth="2" />
-                            </svg>
-                            Visit Website
-                          </motion.button>
-                        </Link>
+                          {/* Tags Section */}
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tags.map((tag, idx) => (
+                              <span 
+                                key={idx} 
+                                className="text-xs py-1 px-3 bg-white/5 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/10 transition-colors duration-200"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          {/* Action Button - Always at Bottom */}
+                          <div className="mt-auto">
+                            <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                              <motion.button 
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-4 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium flex items-center justify-center gap-2 group"
+                              >
+                                <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20" stroke="currentColor" strokeWidth="2" />
+                                </svg>
+                                Visit Website
+                                <svg 
+                                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
+                                  fill="none" 
+                                  stroke="currentColor" 
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </motion.button>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   ))}

@@ -78,7 +78,7 @@ const About: React.FC = () => {
               </div>
 
               <p className="text-lg font-light mb-8 text-gray-300">
-                Hi, I&apos;m Chisom, a passionate creator of digital experiences specializing in modern technologies like React, Next.js, and Tailwind CSS. With several years of experience in development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
+                Hi, I&apos;m Chisom, a passionate creator of digital experiences specializing in modern technologies like React Native, React, Vue, Next.js, and Tailwind CSS. With several years of experience in Software development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
               </p>
             </motion.div>
 
@@ -104,43 +104,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Achievements Section - Updated with glass cards */}
-        {/* <section className="py-20 relative">
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="text-4xl font-bold mb-14"
-            >
-              <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                Achievements & Skills
-              </span>
-            </motion.h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {achievements.map((achievement, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5, scale: 1.03 }}
-                  className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg relative overflow-hidden flex flex-col items-center justify-center min-h-52"
-                >
-                  <h3 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent relative z-10">
-                    {achievement.value}
-                  </h3>
-                  <p className="text-lg text-gray-300 relative z-10">
-                    {achievement.title}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section> */}
+        
 
         {/* CV Section - Updated with direct link */}
         <section className="py-24 relative">
@@ -183,7 +147,7 @@ const About: React.FC = () => {
               </p>
 
               <motion.a
-                href="https://drive.google.com/file/d/1lLt1bw5Uf0Y4gdIA2FKFtT61jSNgJ03O/view?usp=sharing"
+                href="https://drive.google.com/file/d/18q00pKRG2CfCs1zBXQOBI_II9Dp3iIkr/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
