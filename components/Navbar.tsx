@@ -54,24 +54,31 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Contact', path: '/#contact' },
   ];
 
   return (
     <nav
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
         scrolled 
-          ? 'backdrop-blur-md bg-white/10 dark:bg-gray-900/80 shadow-lg' 
-          : 'bg-transparent'
+          ? 'backdrop-blur-md bg-gray-900/80 shadow-lg' 
+          : 'bg-black/20 backdrop-blur-sm'
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center py-4 px-6 relative">
-        {/* Mobile Menu Icon (on the left) */}
-        <div
-          className="md:hidden text-white text-3xl cursor-pointer"
-          onClick={toggleSidebar}
-        >
-          {sidebarOpen ? <AiOutlineClose className="w-6 h-6" /> : <AiOutlineMenu className="w-6 h-6" />}
+      <div className="container mx-auto flex justify-between items-center py-4 px-4 relative">
+        {/* Mobile Menu Icon Toggle (on the left) */}
+        <div className="md:hidden">
+          {sidebarOpen ? (
+            <AiOutlineClose 
+              className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition-colors duration-200" 
+              onClick={toggleSidebar}
+            />
+          ) : (
+            <AiOutlineMenu 
+              className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition-colors duration-200" 
+              onClick={toggleSidebar}
+            />
+          )}
         </div>
 
         {/* Logo */}
@@ -82,7 +89,7 @@ const Navbar = () => {
           className="text-white text-2xl font-bold cursor-pointer"
           onClick={handleLogoClick}
         >
-          <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+          <span className="text-white">
             Chisom.dev
           </span>
         </motion.h1>
@@ -98,14 +105,14 @@ const Navbar = () => {
             >
               <Link 
                 href={item.path} 
-                className={`text-white hover:bg-gradient-to-r from-blue-400 to-teal-400 hover:bg-clip-text hover:text-transparent transition-all duration-300 pb-1 ${
+                className={`text-white hover:text-gray-300 transition-all duration-300 pb-1 ${
                   pathname === item.path ? 'font-medium' : ''
                 }`}
               >
                 {item.name}
                 {pathname === item.path && (
                   <motion.div 
-                    className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-teal-400 rounded-sm"
+                    className="absolute bottom-0 left-0 w-full h-1 bg-white rounded-sm"
                     layoutId="navIndicator"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -124,51 +131,31 @@ const Navbar = () => {
         {isHomePage && <DecorativeSVG />}
       </div>
 
-      {/* Modern sidebar with blur effect */}
+      {/* Collapse-style mobile menu */}
       <motion.div
-        initial={{ x: "-100%" }}
-        animate={{ x: sidebarOpen ? 0 : "-100%" }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="fixed top-0 left-0 h-full w-64 backdrop-blur-xl bg-gray-900/90 md:hidden z-40 border-r border-gray-700/30"
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ 
+          opacity: sidebarOpen ? 1 : 0, 
+          height: sidebarOpen ? "auto" : 0 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="md:hidden overflow-hidden backdrop-blur-md bg-gray-900/95 border-t border-gray-700/30"
       >
-        <div className="flex justify-between items-center bg-gray-800/50 py-4 px-4">
-          <h2 className="text-white text-xl font-bold">
-            <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-              Menu
-            </span>
-          </h2>
-          <AiOutlineClose
-            className="w-6 h-6 text-white cursor-pointer"
-            onClick={toggleSidebar}
-          />
-        </div>
-
-        <ul className="flex flex-col space-y-6 mt-8 px-6">
+        <ul className="flex flex-col space-y-1 py-4 px-4">
           {navItems.map((item, index) => (
-            <li key={index} className="flex items-center space-x-3 group relative">
-              {index === 0 && <AiOutlineHome className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
-              {index === 1 && <AiOutlineUser className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
-              {index === 2 && <AiOutlinePhone className="text-blue-400 group-hover:text-teal-400 transition-colors" />}
-              
+            <li key={index} className="group relative">
               <Link 
                 href={item.path} 
-                className={`text-white group-hover:text-teal-400 transition-colors ${
-                  pathname === item.path ? 'font-medium' : ''
+                className={`flex items-center space-x-3 py-3 px-4 rounded-lg text-white hover:bg-gray-800/50 transition-all duration-200 ${
+                  pathname === item.path ? 'bg-gray-800/50 font-medium' : ''
                 }`} 
                 onClick={toggleSidebar}
               >
-                {item.name}
+                {index === 0 && <AiOutlineHome className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
+                {index === 1 && <AiOutlineUser className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
+                {index === 2 && <AiOutlinePhone className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
+                <span>{item.name}</span>
               </Link>
-              
-              {pathname === item.path && (
-                <motion.div 
-                  className="absolute -left-6 w-1 h-6 bg-gradient-to-b from-blue-400 to-teal-400 rounded-r-sm"
-                  layoutId="sidebarIndicator"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
             </li>
           ))}
         </ul>

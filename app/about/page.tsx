@@ -1,47 +1,9 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import { motion } from "framer-motion";
 import Navbar from '@/components/Navbar';
 
-// Define interface for TextAnimation props
-interface TextAnimationProps {
-  words: string;
-}
-
-// Custom text animation component (matching homepage style)
-const TextAnimation: React.FC<TextAnimationProps> = ({ words }) => {
-  const [displayedText, setDisplayedText] = useState<string>('');
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  useEffect(() => {
-    if (currentIndex < words.length) {
-      const timer = setTimeout(() => {
-        setDisplayedText(prev => prev + words[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 80);
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, words]);
-
-  return (
-    <h2 className="text-xl md:text-2xl font-medium">
-      <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-        {displayedText}
-      </span>
-      <span className="animate-pulse">|</span>
-    </h2>
-  );
-};
-
-// Interface for achievement items
-// interface Achievement {
-//   title: string;
-//   value: string;
-// }
-
 const About: React.FC = () => {
-  const words = "Full-Stack Developer & Business Strategy Consultant";
 
   // Define achievements array with proper typing
   // const achievements: Achievement[] = [
@@ -53,124 +15,98 @@ const About: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
-        {/* Hero Section with glass morphism */}
-        <section className="pt-28 pb-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/mesh-gradient.png')] opacity-20 mix-blend-lighten"></div>
-          <div className="absolute top-20 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl opacity-10"></div>
-          
-          <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="md:w-1/2 text-center md:text-left"
-            >
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                  About Me
-                </span>
-              </h1>
-              
-              <div className="mt-4 mb-8">
-                <TextAnimation words={words} />
-              </div>
-
-              <p className="text-lg font-light mb-8 text-gray-300">
-                Hi, I&apos;m Chisom, a passionate creator of digital experiences specializing in modern technologies like React Native, React, Vue, Next.js, and Tailwind CSS. With several years of experience in Software development, I deliver scalable and efficient solutions that focus on exceptional user experiences.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="md:w-1/2 mb-8 md:mb-0"
-            >
-              <div className="relative w-80 h-80 mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full blur-2xl opacity-30"></div>
-             
-                <Image
-                  src="https://res.cloudinary.com/dqbbm0guw/image/upload/v1746447146/Screenshot_2025-05-05_at_1.11.37_PM_gc0bhd.png"
-                  alt="About Developer"
-                  width={400}
-                  height={400}
-                  className="rounded-full object-cover shadow-2xl border-4 border-white/10 backdrop-blur-sm relative z-10 w-full h-full"
-                  priority
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
+      <div className="min-h-screen bg-black text-white">
 
         
 
-        {/* CV Section - Updated with direct link */}
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-teal-900/30"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl opacity-10"></div>
+        {/* About & CV Section - 50/50 Layout */}
+        <section className="pt-20 pb-12 md:py-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/30 to-gray-800/30"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gray-800 rounded-full filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gray-700 rounded-full filter blur-3xl opacity-10"></div>
           
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                  View My CV
-                </span>
-              </h2>
-              
-              <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
-                Interested in learning more about my experience and qualifications?
-                View my comprehensive CV to see my full professional background.
-              </p>
-            </motion.div>
-
-            {/* CV View Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="backdrop-blur-lg bg-white/5 border border-white/10 p-8 rounded-xl shadow-lg max-w-md mx-auto"
-            >
-              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                My Resume
-              </h3>
-              <p className="mb-6 text-gray-300">
-                Check out my detailed CV to learn more about my professional experience, skills, and qualifications.
-              </p>
-
-              <motion.a
-                href="https://drive.google.com/file/d/18q00pKRG2CfCs1zBXQOBI_II9Dp3iIkr/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/20 transition-all duration-300 font-medium"
+          <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* About Section */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="flex flex-col justify-center"
               >
-                View 
-              </motion.a>
-            </motion.div>
+                <h2 className="text-2xl md:text-4xl font-bold mb-6">
+                  <span className="text-white">
+                    My Experience
+                  </span>
+                </h2>
+                
+                <p className="text-lg mb-6 text-gray-300 leading-relaxed">
+                  I&apos;m a Full-Stack Developer and Business Strategy Consultant with experience working in competitive startups across various development phases. From initial brainstorming sessions to product launch and scaling, I&apos;ve been involved in every stage of the development lifecycle.
+                </p>
+                
+                <p className="text-lg mb-6 text-gray-300 leading-relaxed">
+                  My expertise spans modern technologies including React Native, React, Vue, Next.js, and Tailwind CSS. I&apos;ve worked with diverse industries - from logistics and gaming platforms to healthcare and cybersecurity - delivering scalable solutions that drive business growth.
+                </p>
+                
+                <p className="text-lg mb-6 text-gray-300 leading-relaxed">
+                  I specialize in transforming ideas into robust digital products, combining technical excellence with strategic thinking to ensure solutions not only meet current needs but scale for future growth.
+                </p>
+                
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Constantly learning emerging technologies and staying updated with industry best practices to deliver cutting-edge solutions that make a real impact.
+                </p>
+              </motion.div>
+
+              {/* CV Section */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="flex flex-col justify-center"
+              >
+                <div className="backdrop-blur-lg bg-gray-900/50 border border-gray-700 p-8 rounded-xl shadow-lg">
+                  <h3 className="text-xl md:text-3xl font-bold mb-6 text-white">
+                    View My CV
+                  </h3>
+                  
+                  <p className="text-lg mb-8 text-gray-300 leading-relaxed">
+                    Interested in learning more about my experience and qualifications? 
+                    View my comprehensive CV to see my full professional background, skills, and achievements.
+                  </p>
+
+                  <div className="flex justify-center md:justify-start">
+                    <motion.a
+                      href="https://drive.google.com/file/d/18q00pKRG2CfCs1zBXQOBI_II9Dp3iIkr/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white text-black py-4 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium text-lg"
+                    >
+                      View CV
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Contact Section - Matching homepage style */}
-        <section className="py-24 relative">
-          <div className="container mx-auto px-4 text-center relative z-10">
+        <section className="py-12 md:py-24 relative">
+          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dqbbm0guw/image/upload/v1755615948/entrepreneurship-launch-rocket-start-flying-up-network-line-connection-startup-concept-plan-development-business-project-digital_1_lfpini.png')] bg-cover bg-center bg-no-repeat opacity-30"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="container mx-auto px-4 text-center relative z-10 max-w-7xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+              <h2 className="text-2xl md:text-4xl font-bold mb-6">
+                <span className="text-white">
                   Let&apos;s Connect
                 </span>
               </h2>
@@ -183,8 +119,8 @@ const About: React.FC = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="mailto:chisom@example.com"
-                className="inline-block bg-gradient-to-r from-blue-500 to-teal-500 py-4 px-10 rounded-full text-lg font-medium shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+                href="mailto:chisomhenryg@gmail.com"
+                className="inline-block bg-white text-black py-4 px-10 rounded-full text-lg font-medium shadow-lg hover:bg-gray-200 transition-all duration-300"
               >
                 Get In Touch
               </motion.a>

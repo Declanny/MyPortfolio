@@ -3,22 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --foreground: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
 }
 
 
@@ -31,24 +33,18 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-body.dark {
-  background-color: #1a1a1a; /* Dark background */
-  color: #f0f0f0; /* Light text color */
-}
-/* globals.css or nprogress-custom.css */
-
 /* Customize the color of the loading bar */
 #nprogress .bar {
-  background: #00ff00 !important; /* Change to your preferred color */
+  background: #ffffff !important; /* White loading bar */
 }
 
 /* Customize the color of the spinner, if enabled */
 #nprogress .spinner-icon {
-  border-top-color: #00ff00 !important; /* Change spinner color */
-  border-left-color: #00ff00 !important;
+  border-top-color: #ffffff !important; /* White spinner */
+  border-left-color: #ffffff !important;
 }
 
 /* Customize the background of the progress bar */
 #nprogress .peg {
-  box-shadow: 0 0 10px #00ff00, 0 0 5px #00ff00 !important; /* Change glow effect */
+  box-shadow: 0 0 10px #ffffff, 0 0 5px #ffffff !important; /* White glow effect */
 }

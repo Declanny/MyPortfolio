@@ -1,6 +1,6 @@
 "use client";  // Mark this component as a Client Component
 
-import localFont from 'next/font/local';
+import { Manrope } from 'next/font/google';
 import { useEffect } from 'react';  // Import useEffect
 import { usePathname } from 'next/navigation';  // Use the new router system
 import NProgress from 'nprogress'; // Import nprogress
@@ -9,17 +9,11 @@ import './globals.css';
 import Navbar from '../components/Navbar'; // Adjust the path as necessary
 import Footer from '../components/Footer'; // Adjust the path as necessary
 
-// Font setup
-const geistSans = localFont({
-  src: '/fonts/GeistVF.woff', // Adjusted path
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-
-const geistMono = localFont({
-  src: '/fonts/GeistMonoVF.woff', // Adjusted path
-  variable: '--font-geist-mono',
-  weight: '100 900',
+// Font setup - Manrope font
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
 });
 
 // Removed the metadata export
@@ -47,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${manrope.variable} font-manrope antialiased`}
       >
         <Navbar />
         {children}
