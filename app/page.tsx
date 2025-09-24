@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Navbar from '@/components/Navbar'; // Import the Navbar component
 
 // Define interface for TextAnimation props
@@ -158,12 +157,7 @@ const Page: React.FC = () => {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-gray-700 rounded-full filter blur-3xl opacity-20"></div>
           
           <div className="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8 relative z-10 max-w-7xl">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="w-full md:w-1/2 lg:pr-8 text-center md:text-left"
-            >
+            <div className="w-full md:w-1/2 lg:pr-8 text-center md:text-left">
               <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 <span className="text-white">
                   Building Digital <br />Experiences
@@ -175,27 +169,21 @@ const Page: React.FC = () => {
               </div>
 
               <div className="flex flex-row gap-2 sm:gap-4 justify-center md:justify-start flex-wrap">
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <a
                   href="#projects"
                   className="bg-white text-black py-3 px-6 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium"
                 >
                   View My Work
-                </motion.a>
+                </a>
                 
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <a
                    href="#contact"
                    className="bg-transparent border border-gray-600 backdrop-blur-sm py-3 px-6 rounded-full shadow-lg hover:bg-gray-900 transition-all duration-300"
                 >
                   Get In Touch
-                </motion.a>
+                </a>
 
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <a
                   href="https://github.com/Declanny"
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -210,24 +198,16 @@ const Page: React.FC = () => {
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                   GitHub
-                </motion.a>
+                </a>
               </div>
-            </motion.div>
+            </div>
 
             {/* Projects Grid */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="w-full md:w-1/2 mb-8 md:mb-0"
-            >
+            <div className="w-full md:w-1/2 mb-8 md:mb-0">
               <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto">
                 {projects.map((project, index) => (
-                <motion.div
+                <div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
                     className="group cursor-pointer"
                     onClick={() => window.open(project.link, '_blank', 'noopener,noreferrer')}
                   >
@@ -249,34 +229,26 @@ const Page: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                </motion.div>
+                </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Projects Section with improved horizontal scrolling */}
         <section id="projects" className="py-12 md:py-20 relative">
           <div className="container mx-auto px-4 relative z-10 max-w-7xl">
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="text-2xl md:text-4xl font-bold mb-14 text-center"
-            >
+            <h2 className="text-2xl md:text-4xl font-bold mb-14 text-center">
               <span className="text-white">
                 Featured Projects
               </span>
-            </motion.h2>
+            </h2>
             
             <div className="relative">
               {/* Navigation Buttons */}
               <div className="hidden lg:flex justify-center mb-8 gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   onClick={scrollLeft}
                   disabled={!canScrollLeft}
                   className={`p-3 rounded-full backdrop-blur-sm border transition-all duration-300 ${
@@ -288,11 +260,9 @@ const Page: React.FC = () => {
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                </motion.button>
+                </button>
                 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   onClick={scrollRight}
                   disabled={!canScrollRight}
                   className={`p-3 rounded-full backdrop-blur-sm border transition-all duration-300 ${
@@ -304,7 +274,7 @@ const Page: React.FC = () => {
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </motion.button>
+                </button>
               </div>
 
               {/* Projects Container */}
@@ -318,12 +288,8 @@ const Page: React.FC = () => {
                   }}
                 >
                   {projects.map((project, index) => (
-                    <motion.div
+                    <div
                       key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
                       className="flex-none w-80 lg:w-96 backdrop-blur-lg bg-gray-900/50 border border-gray-700 rounded-xl overflow-hidden shadow-xl group hover:shadow-2xl hover:shadow-gray-500/10 transition-all duration-300"
                     >
                       {/* Card Content Container */}
@@ -397,11 +363,7 @@ const Page: React.FC = () => {
                           {/* Action Button - Always at Bottom */}
                           <div className="mt-auto">
                             <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                              <motion.button 
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="w-full bg-white text-black py-3 px-4 rounded-lg hover:shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium flex items-center justify-center gap-2 group"
-                              >
+                              <button className="w-full bg-white text-black py-3 px-4 rounded-lg hover:shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium flex items-center justify-center gap-2 group">
                                 <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
                                   <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20" stroke="currentColor" strokeWidth="2" />
@@ -415,12 +377,12 @@ const Page: React.FC = () => {
                                 >
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
-                              </motion.button>
+                              </button>
                             </Link>
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
                 
@@ -446,13 +408,7 @@ const Page: React.FC = () => {
           
           <div className="container mx-auto px-4 relative z-10 max-w-7xl">
             {/* Hero Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
+            <div className="text-center mb-16">
               <h2 className="text-2xl md:text-4xl font-bold mb-6 leading-tight">
                 <span className="text-white">
                   Let&apos;s Connect
@@ -463,17 +419,11 @@ const Page: React.FC = () => {
                 Have a project in mind or want to collaborate? I&apos;m always open to new opportunities 
                 and exciting challenges in the world of web development.
               </p>
-            </motion.div>
+            </div>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form Section */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="relative z-10"
-              >
+              <div className="relative z-10">
                 <div className="backdrop-blur-lg bg-gray-900/50 border border-gray-700 rounded-xl p-8 shadow-xl">
                   <h3 className="text-xl md:text-3xl font-bold mb-6">
                     <span className="text-white">
@@ -526,26 +476,18 @@ const Page: React.FC = () => {
                       />
                     </div>
                     
-                    <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                    <button
                       type="submit"
                       className="bg-white text-black py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium w-full md:w-auto"
                     >
                       Send Message
-                    </motion.button>
+                    </button>
                   </form>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Contact Info & Social Section */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="relative z-10 flex flex-col gap-8"
-              >
+              <div className="relative z-10 flex flex-col gap-8">
                 {/* Contact Information */}
                 <div className="backdrop-blur-lg bg-gray-900/50 border border-gray-700 rounded-xl p-8 shadow-xl">
                   <h3 className="text-xl md:text-3xl font-bold mb-6">
@@ -596,8 +538,7 @@ const Page: React.FC = () => {
                   </h3>
                   
                   <div className="grid grid-cols-4 gap-4">
-                    <motion.a 
-                      whileHover={{ y: -5, scale: 1.1 }}
+                    <a 
                       href="https://www.linkedin.com/in/chisomhenryg/" 
                       target="_blank" 
                       rel="noreferrer" 
@@ -606,9 +547,8 @@ const Page: React.FC = () => {
                       <svg className="w-12 h-12 text-gray-400 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                       </svg>
-                    </motion.a>
-                    <motion.a 
-                      whileHover={{ y: -5, scale: 1.1 }}
+                    </a>
+                    <a 
                       href="https://www.facebook.com/share/18gsNgGGSy/?mibextid=wwXIfr" 
                       target="_blank" 
                       rel="noreferrer" 
@@ -617,10 +557,9 @@ const Page: React.FC = () => {
                       <svg className="w-12 h-12 text-gray-400 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                       </svg>
-                </motion.a>
+                </a>
                 
-                <motion.a
-                      whileHover={{ y: -5, scale: 1.1 }}
+                <a
                       href="https://x.com/11declan_?s=21&t=UOzvhZvwZuAe5hZuC1YiyQ" 
                   target="_blank" 
                       rel="noreferrer" 
@@ -629,10 +568,9 @@ const Page: React.FC = () => {
                       <svg className="w-12 h-12 text-gray-400 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                       </svg>
-                    </motion.a>
+                    </a>
                     
-                    <motion.a 
-                      whileHover={{ y: -5, scale: 1.1 }}
+                    <a 
                       href="https://www.instagram.com/11declan?igsh=bHN3dGxrMW5oYmE0&utm_source=qr" 
                       target="_blank" 
                       rel="noreferrer" 
@@ -641,7 +579,7 @@ const Page: React.FC = () => {
                       <svg className="w-12 h-12 text-gray-400 hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.281c-.49 0-.875-.385-.875-.875s.385-.875.875-.875.875.385.875.875-.385.875-.875.875zm-1.297 1.297c-1.297 0-2.448-.49-3.323-1.297C10.363 7.744 9.873 6.593 9.873 5.296s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297z"/>
                   </svg>
-                </motion.a>
+                </a>
                   </div>
                 </div>
                 
@@ -659,19 +597,17 @@ const Page: React.FC = () => {
                   </p>
 
                   <div className="flex justify-center md:justify-start">
-                    <motion.a
+                    <a
                       href="https://drive.google.com/file/d/18q00pKRG2CfCs1zBXQOBI_II9Dp3iIkr/view?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                       className="bg-white text-black py-4 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 font-medium text-lg"
                     >
                       View CV
-                    </motion.a>
+                    </a>
                   </div>
               </div>
-            </motion.div>
+            </div>
             </div>
           </div>
         </section>
