@@ -14,14 +14,8 @@ export const metadata: Metadata = {
   title: 'Chisom.dev - Full-Stack Developer & Business Strategy Consultant',
   description: 'Portfolio of Chisom - Full-Stack Developer & Business Strategy Consultant. Building digital experiences and transforming ideas into reality.',
   icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
-    ],
-    apple: [
-      { url: '/apple-icon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: '/favicon.ico',
+    icon: '/icon.svg',
+    apple: '/apple-icon.svg',
   },
 };
 
