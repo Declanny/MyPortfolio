@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #000000;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -35,16 +35,16 @@ body {
 
 /* Customize the color of the loading bar */
 #nprogress .bar {
-  background: #ffffff !important; /* White loading bar */
+  background: #000000 !important; /* Black loading bar */
 }
 
 /* Customize the color of the spinner, if enabled */
 #nprogress .spinner-icon {
-  border-top-color: #ffffff !important; /* White spinner */
-  border-left-color: #ffffff !important;
+  border-top-color: #000000 !important; /* Black spinner */
+  border-left-color: #000000 !important;
 }
 
 /* Customize the background of the progress bar */
 #nprogress .peg {
-  box-shadow: 0 0 10px #ffffff, 0 0 5px #ffffff !important; /* White glow effect */
+  box-shadow: 0 0 10px #000000, 0 0 5px #000000 !important; /* Black glow effect */
 }

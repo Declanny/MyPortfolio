@@ -3,41 +3,24 @@
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlinePhone} from 'react-icons/ai';
+import { AiOutlineMenu, AiOutlineClose, AiOutlineHome, AiOutlineUser, AiOutlinePhone, AiOutlineFileText } from 'react-icons/ai';
 
-// Decorative SVG Component
-const DecorativeSVG = () => {
-  return (
-    <motion.svg 
-      className="absolute right-0 top-full w-32 h-32 text-white opacity-50"
-      viewBox="0 0 100 100"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 0.5 }}
-      transition={{ duration: 1.5 }}
-    >
-      {/* Abstract lines resembling a creative/artistic drawing */}
-  
- 
-    </motion.svg>
-  );
-};
-
-// Navbar Component with glass morphism and active link indicator
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   const handleLogoClick = () => {
     if (window.location.pathname === '/') {
@@ -47,120 +30,162 @@ const Navbar = () => {
     }
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/#contact' },
+    { name: 'Home', path: '/', icon: AiOutlineHome },
+    { name: 'About', path: '/about', icon: AiOutlineUser },
+    { name: 'Contact', path: '/#contact', icon: AiOutlinePhone },
   ];
 
   return (
-    <nav
-      className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'backdrop-blur-md bg-gray-900/80 shadow-lg' 
-          : 'bg-black/20 backdrop-blur-sm'
-      }`}
-    >
-      <div className="container mx-auto flex justify-between items-center py-4 px-4 relative">
-        {/* Mobile Menu Icon Toggle (on the left) */}
-        <div className="md:hidden">
-          {sidebarOpen ? (
-            <AiOutlineClose 
-              className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition-colors duration-200" 
-              onClick={toggleSidebar}
-            />
+    <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-4">
+      <nav
+        className={`transition-all duration-500 ${
+          scrolled 
+            ? 'bg-gray-900 shadow-xl' 
+            : 'bg-gray-900'
+        } w-full md:max-w-[1270px] md:h-[70px] md:rounded-2xl flex items-center justify-center md:px-8 md:py-0`}
+      >
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 -ml-2 absolute left-4"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? (
+            <AiOutlineClose className="w-6 h-6 text-white" />
           ) : (
-            <AiOutlineMenu 
-              className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition-colors duration-200" 
-              onClick={toggleSidebar}
-            />
+            <AiOutlineMenu className="w-6 h-6 text-white" />
           )}
+        </button>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center justify-between w-full h-full px-8">
+          {/* Left side items */}
+          <div className="flex items-center space-x-1 lg:space-x-2">
+            <Link
+              href="/"
+              className={`px-4 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
+                pathname === '/' || pathname === ''
+                  ? 'bg-orange-500 text-white border border-black font-medium'
+                  : 'text-white hover:text-orange-500'
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className={`px-4 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
+                pathname === '/about'
+                  ? 'bg-orange-500 text-white border border-black font-medium'
+                  : 'text-white hover:text-orange-500'
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              href="/#contact"
+              className={`px-4 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
+                'text-white hover:text-orange-500'
+              }`}
+            >
+              Contact
+            </Link>
+          </div>
+
+          {/* Logo - Center */}
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-sm">CH</span>
+            </div>
+            <span className="text-white font-bold text-lg">Chisom.dev</span>
+          </Link>
+
+          {/* Right side items */}
+          <div className="flex items-center space-x-1 lg:space-x-2">
+            <Link
+              href="/#projects"
+              className={`px-4 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
+                'text-white hover:text-orange-500'
+              }`}
+            >
+              Projects
+            </Link>
+            <Link
+              href="https://drive.google.com/file/d/11cTLcG7foelmUmv0MHs-t7u8Uo490Sf9/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-4 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
+                'text-white hover:text-orange-500'
+              }`}
+            >
+              Resume
+            </Link>
+          </div>
         </div>
 
-        {/* Logo */}
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-white text-2xl font-bold cursor-pointer"
+        {/* Mobile Logo */}
+        <h1
+          className="md:hidden text-white text-xl font-bold cursor-pointer flex-1 text-center"
           onClick={handleLogoClick}
         >
-          <span className="text-white">
-            Chisom.dev
-          </span>
-        </motion.h1>
+          <Link href="/" className="flex items-center justify-center gap-2">
+            <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-xs">CH</span>
+            </div>
+            <span>Chisom.dev</span>
+          </Link>
+        </h1>
 
-        {/* Desktop Links with Active Indicator */}
-        <ul className="hidden md:flex space-x-8">
-          {navItems.map((item, index) => (
-            <motion.li 
-              key={index}
-              whileHover={{ y: -3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="relative"
+        {/* Mobile Dropdown Menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            menuOpen ? 'max-h-[400px]' : 'max-h-0'
+          } absolute top-[60px] left-0 right-0 bg-gray-900 rounded-b-2xl`}
+        >
+          <div className="border-t border-gray-700">
+            {navItems.map((item, index) => {
+              const Icon = item.icon;
+              const active = item.path === '/' ? pathname === '/' : pathname.startsWith(item.path.replace('#', ''));
+              return (
+                <Link
+                  key={index}
+                  href={item.path}
+                  className={`flex items-center space-x-3 py-4 px-6 text-white hover:bg-gray-800 transition-colors ${
+                    active ? 'bg-gray-800 font-medium border-l-4 border-orange-500' : ''
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="text-base">{item.name}</span>
+                </Link>
+              );
+            })}
+            <Link
+              href="/#projects"
+              className="flex items-center space-x-3 py-4 px-6 text-white hover:bg-gray-800 transition-colors"
+              onClick={() => setMenuOpen(false)}
             >
-              <Link 
-                href={item.path} 
-                className={`text-white hover:text-gray-300 transition-all duration-300 pb-1 ${
-                  pathname === item.path ? 'font-medium' : ''
-                }`}
-              >
-                {item.name}
-                {pathname === item.path && (
-                  <motion.div 
-                    className="absolute bottom-0 left-0 w-full h-1 bg-white rounded-sm"
-                    layoutId="navIndicator"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </Link>
-            </motion.li>
-          ))}
-        </ul>
-
-        {/* Placeholder for another feature on the right */}
-        <div className="md:hidden"></div>
-        
-        {/* Decorative SVG only on home page */}
-        {isHomePage && <DecorativeSVG />}
-      </div>
-
-      {/* Collapse-style mobile menu */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ 
-          opacity: sidebarOpen ? 1 : 0, 
-          height: sidebarOpen ? "auto" : 0 
-        }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="md:hidden overflow-hidden backdrop-blur-md bg-gray-900/95 border-t border-gray-700/30"
-      >
-        <ul className="flex flex-col space-y-1 py-4 px-4">
-          {navItems.map((item, index) => (
-            <li key={index} className="group relative">
-              <Link 
-                href={item.path} 
-                className={`flex items-center space-x-3 py-3 px-4 rounded-lg text-white hover:bg-gray-800/50 transition-all duration-200 ${
-                  pathname === item.path ? 'bg-gray-800/50 font-medium' : ''
-                }`} 
-                onClick={toggleSidebar}
-              >
-                {index === 0 && <AiOutlineHome className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
-                {index === 1 && <AiOutlineUser className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
-                {index === 2 && <AiOutlinePhone className="text-gray-400 group-hover:text-white transition-colors w-5 h-5" />}
-                <span>{item.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </motion.div>
-    </nav>
+              <AiOutlineFileText className="w-5 h-5 flex-shrink-0" />
+              <span className="text-base">Projects</span>
+            </Link>
+            <Link
+              href="https://drive.google.com/file/d/11cTLcG7foelmUmv0MHs-t7u8Uo490Sf9/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-3 py-4 px-6 text-white hover:bg-gray-800 transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              <AiOutlineFileText className="w-5 h-5 flex-shrink-0" />
+              <span className="text-base">Resume</span>
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 };
 
