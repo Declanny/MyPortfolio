@@ -291,7 +291,7 @@ const Page = () => {
         </button>
 
         {/* Profile Content (Sidebar Content) */}
-        <div className="p-6 pt-20">
+        <div className="p-6 pt-20 pb-24">
           <div className="flex flex-col items-center text-center">
             <div className="relative mb-4 h-32 w-32">
               <span className="absolute inset-0 rounded-full bg-[#f2f2f2]" />
@@ -386,7 +386,7 @@ const Page = () => {
       </div>
 
       <div className="relative flex w-full flex-col gap-4 lg:h-screen lg:flex-row lg:gap-6 lg:overflow-hidden">
-        <aside className="order-2 lg:order-1 lg:w-[320px] lg:flex-shrink-0 lg:overflow-y-auto">
+        <aside id="profile" className="order-2 lg:order-1 lg:w-[320px] lg:flex-shrink-0 lg:overflow-y-auto">
           <div className="rounded-[30px] bg-white p-6 shadow-[0_25px_70px_rgba(15,23,42,0.08)]">
             <div className="flex flex-col items-center text-center">
               <div className="relative mb-4 h-40 w-40">
@@ -485,7 +485,7 @@ const Page = () => {
           <div id="top" className="relative rounded-[30px] bg-white px-4 py-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)] sm:px-8">
             <div className="flex flex-col gap-8 lg:flex-row">
               <div className="flex-1 space-y-5">
-                <h2 id="profile" className="text-3xl font-bold leading-tight text-[#1c1c1c] sm:text-5xl">
+                <h2 className="text-3xl font-bold leading-tight text-[#1c1c1c] sm:text-5xl">
                   Building Digital <br /> Experiences
                 </h2>
                 <p className="text-lg font-semibold text-[#1c1c1c]">
