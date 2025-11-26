@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import WhatsAppWidget from '../components/WhatsAppWidget';
 
 export default function ClientLayout({
@@ -29,9 +27,7 @@ export default function ClientLayout({
 
   return (
     <>
-      <Navbar />
       {children}
-      <Footer />
       <WhatsAppWidget />
     </>
   );

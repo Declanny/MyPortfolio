@@ -28,6 +28,9 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .grayscale {
+    filter: grayscale(100%);
+  }
 }
 body {
   transition: background-color 0.3s, color 0.3s;

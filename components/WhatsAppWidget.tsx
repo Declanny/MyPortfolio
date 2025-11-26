@@ -22,7 +22,7 @@ const WhatsAppWidget = () => {
         damping: 20,
         delay: 0.5 
       }}
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:shadow-green-500/50 transition-all duration-300 group"
+      className="fixed bottom-24 right-6 xl:bottom-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:shadow-green-500/50 transition-all duration-300 group"
       aria-label="Chat on WhatsApp"
     >
       <FaWhatsapp className="w-6 h-6 md:w-7 md:h-7" />
